@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+    <header th:replace="/fragments/header :: header"> </header>
+
+    <main>
+        <div class= "main">
+            <div class ="main__card">
+                <h2>Actualizar Datos Personales</h2>
+                <form th:action="@{/perfiles/editar-perfil}" method="post" enctype="multipart/form-data">
+                    <div class="form__container">
+                        <p th:if="${error != null}" th:text="${error}" class="warn"></p>
+                        <input type="hidden" name="id" th:value="${session.usuariosession.id}"/>
+                        <input type="text" placeholder="Nombre de Usuario" name="name" th:value="${perfil.nombre}">
+                        <input type="password" placeholder="Ingrese su Password" name=pass1 th:value="${pass1}">
+                        <input type="password" placeholder="Confirme su Password" name=pass2 th:value="${pass2}">
+                        <p>Seleccione su género:</p>
+                        <select name="generoId">
+                            <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.gen}" th:selected="${perfil.genero !=null && genero.id == perfil.genero.id}"></option>
+                        </select>
+                        <input class ="input-f"  name="archivo" type="file" accept="image/png, image/jpeg" th:value="${perfil.foto}">
+                        <input type="email" placeholder="Ingrese su mail" name="mail" th:value="${perfil.mail}" required>
+                        <button type="submit">Update</button>
+                    </div>
+                </form>
+                
+                <h3>Baja de cuenta</h3>
+                <p class="warn">Si desea solicitar la baja de su cuenta recuerde que no debe tener devoluciones pendientes.</p>
+                <p class="warn">Una vez dada la baja podrá ingresar a su cuenta pero no podrá realizar niniguna solicitud</p>
+                <form th:action="@{/perfiles/iniciar-proceso-baja-cuenta(id=__${perfil.id}__)}" method="post" enctype="multipart/form-data">
+                    <input type="text" placeholder="Ingrese su nombre para confirmar baja" name="nombre">
+                    <div class="form__container object__btn object__btn-2">                    
+                        <button type="submit"> Dar de baja su cuenta</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+
+</body>
+</html>

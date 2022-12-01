@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+    
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+    <header th:replace="/fragments/header :: header"> </header>
+    <main>
+        <div class = "main">
+            <div class= "main__card">
+                <h1 class="main__card__h3">ADMINISTRADOR</h1>
+                <div class="main__card__object main__card__prestamo">
+                    <h3>Lista de Solicitantes</h3>
+                    <p th:if="${error != null}" th:text="${error}" class="warn"></p>
+                    <p th:if="${success != null}" th:text="${success}" class="ok"></p>
+                    <div class="object__button__container">
+                        <div th:each="solicitante:${solicitantes}" class="form__container">
+                            <div class="object__btn">
+                                <form th:action="@{/administradores/proceso-iniciar-orden(id=__${session.usuariosession.id}__, solicitId = __${solicitante.id}__)}" method="post" enctype="multipart/form-data">
+                                    <div class="form__container object__btn object__btn-2">                    
+                                        <button type="submit" th:if="${solicitante != null}" th:text="${solicitante.nombre}"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__card__object main__card__prestamo">
+                    <h3>Lista de Usuarios con Prestamos Activos</h3>
+                    <p th:if="${error != null}" th:text="${error}" class="warn"></p>
+                    <p th:if="${success != null}" th:text="${success}" class="ok"></p>
+                    <div class="object__button__container">
+                        <div th:each="activa:${activas}" class="form__container">
+                            <div class="object__btn">
+                                <form th:action="@{/administradores/baja-orden(id=__${session.usuariosession.id}__, ordenId = __${activa.id}__)}" method="post" enctype="multipart/form-data">
+                                    <div class="form__container object__btn object__btn-2">                    
+                                        <button type="submit" th:if="${activa != null}" th:text="${activa.usuario.nombre}"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main__card__object main__card__prestamo">
+                    <h3>Lista de Prestamos Vencidos</h3>
+                    <p th:if="${error != null}" th:text="${error}" class="warn"></p>
+                    <p th:if="${success != null}" th:text="${success}" class="ok"></p>
+                    <div class="object__button__container">
+                        <div th:each="vencida:${vencidas}" class="form__container">
+                            <div class="object__btn">
+                                <form th:action="@{/administradores/baja-orden(id=__${session.usuariosession.id}__, ordenId = __${vencida.id}__)}" method="post" enctype="multipart/form-data">
+                                    <div class="form__container object__btn object__btn-2">                    
+                                        <button type="submit" th:if="${vencida != null}" th:text="${vencida.usuario.nombre}"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="main__card__object main__card__prestamo">
+                    <h3>Solicitudes de Baja de Usuarios</h3>
+                    <p th:if="${error != null}" th:text="${error}" class="warn"></p>
+                    <p th:if="${success != null}" th:text="${success}" class="ok"></p>
+                    <div class="object__button__container">
+                        <div th:each="bajado:${bajados}" class="form__container">
+                            <div class="object__btn">
+                                <form th:action="@{/administradores/finalizar-proceso-baja-cuenta(id=__${session.usuariosession.id}__, solicitId = __${bajado.id}__)}" method="post" enctype="multipart/form-data">
+                                    <div class="form__container object__btn object__btn-2">                    
+                                        <button type="submit" th:if="${bajado != null}" th:text="${bajado.nombre}"></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class = "lista__object">
+                    <h4>Lista Usuarios Penalizados</h4>
+                    <!--<p th:if="${mes1 != null}" th:text="${mes1}" class="ok"></p>-->
+                    <div  th:each ="penalizado:${penalizados}" class="object__btn object__btn-4">
+                        <div class="object__delete__container object__delete__container__penalizados"> <!--va a contener dos forms-->
+                            <div class= "penalizados__cabecera">
+                                <div>
+                                    <p th:text="${penalizado.nombre}" class="object__name__btn"></p>
+                                </div>
+                            </div>
+                            <div class="penalizados__cuerpo">
+                                <div class="penalizados__button_1">
+                                    <h5>Eliminar fecha Penalidad</h5>
+                                    <form th:action="@{/administradores/proceso-eliminar-penalidad(id=__${session.usuariosession.id}__, penalizadoId=__${penalizado.id}__)}" method="post" enctype="multipart/form-data">
+                                        <div class="form__container object__btn-3 btn__penalizado">                   
+                                            <button type="submit">Eliminar Penalidad</button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="penalizados__button_2">
+                                    <div class="penalizados__button__head">
+                                        <h5>Modificar fecha Penalidad</h5>
+                                    </div>
+                                    <div>
+                                        <form th:action="@{/administradores/proceso-modificar-penalidad(id=__${session.usuariosession.id}__, penalizadoId=__${penalizado.id}__)}" method="post" enctype="multipart/form-data">
+                                            <div class="penalizados__button__body">
+                                                <input type="date" name="newPen" required>
+                                                <div class="form__container object__btn-3 btn__penalizado">                   
+                                                    <button type="submit">Modificar Penalidad</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="administrdor__usuarios">
+                    <a th:href="@{/administradores/usuarios(id=__${session.usuariosession.id}__)}" th:if="${role == 'ADMIN'}" class="header__nav__enlace link--disappear">ADMIN</a>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="/fragments/footer :: footer"></footer>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
