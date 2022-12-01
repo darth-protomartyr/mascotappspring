@@ -5,6 +5,7 @@
  */
 package com.mascotappspring.demo.entidades;
 
+import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

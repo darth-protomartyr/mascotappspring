@@ -1,8 +1,8 @@
 <header>
         <div class="header">
             <div class="header__title">
-                <a href="/" th:if="${session.usuariosession == null}" class="lnk"><h1>BOOKDEPOT</h1></a>
-                <a href="/inicio"  th:if="${session.usuariosession != null}" class="lnk" ><h1>BOOKDEPOT</h1></a> 
+                <a href="/" th:if="${session.usuariosession == null}" class="lnk"><h1>MASCOTAPP</h1></a>
+                <a href="/inicio"  th:if="${session.usuariosession != null}" class="lnk" ><h1>MASCOTAPP</h1></a> 
             </div>
             
             <div class="header__nav"  th:if="${role != 'USUARIO'}">
