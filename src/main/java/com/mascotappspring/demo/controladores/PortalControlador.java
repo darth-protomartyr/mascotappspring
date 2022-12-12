@@ -15,6 +15,7 @@ import com.mascotappspring.demo.repositorios.UsuarioRepositorio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -88,13 +89,16 @@ public class PortalControlador {
     }
     
     @PostMapping("/proceso-registro")
-    public String registro(ModelMap modelo, @RequestParam String nom, @RequestParam String pass1, @RequestParam String pass2, @RequestParam int generoId, MultipartFile archivo,@RequestParam String mail) throws ErrorServicio {
+    public String registro(ModelMap modelo, @RequestParam String nom, @RequestParam String ap, @RequestParam String dni, @RequestParam Date fnac, @RequestParam String pass1, @RequestParam String pass2, @RequestParam int generoId, MultipartFile archivo,@RequestParam String mail) throws ErrorServicio {
         List<Genero> generos = new ArrayList<Genero>(Arrays.asList(Genero.values()));
         try {
-            usuarioServ.registrarUsuario(nom, pass1, pass2, generoId, archivo, mail);
+            usuarioServ.registrarUsuario(nom, ap, dni, fnac, pass1, pass2, generoId, archivo, mail);
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             modelo.put("nom", nom);
+            modelo.put("ap", ap);
+            modelo.put("dni", dni);
+            modelo.put("fnac", fnac);
             modelo.put("pass1", pass1);
             modelo.put("pass2", pass2);
             modelo.put("mail", mail);

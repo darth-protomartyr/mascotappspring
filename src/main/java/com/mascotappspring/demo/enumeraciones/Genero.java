@@ -10,16 +10,24 @@ package com.mascotappspring.demo.enumeraciones;
  * @author Gonzalo
  */
 public enum Genero {
-    HOMBRE("Hombre", 1), MUJER("Mujer", 2), OTRO("Otro", 3);
-    String gen;
+    HOMBRE("Hombre", "Macho", 1),
+    MUJER("Mujer", "Hembra", 2),
+    OTRO("Otro", "Otro", 3);
+    String genH;
+    String genM;
     int id;
-    private Genero(String gen, int id) {
-        this.gen = gen;
+    private Genero(String genH, String genM, int id) {
+        this.genH = genH;
+        this.genM = genM;
         this.id = id;
     }
 
-    public String getGen() {
-        return gen;
+    public String getGenH() {
+        return genH;
+    }
+    
+        public String getGenM() {
+        return genM;
     }
     
     public int getId() {

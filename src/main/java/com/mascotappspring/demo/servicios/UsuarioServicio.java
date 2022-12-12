@@ -50,7 +50,7 @@ public class UsuarioServicio implements UserDetailsService {
     private NotificacionServicio notServ;
 //-----------------------------------------------
     @Transactional
-    public Usuario registrarUsuario(String nombre, String pass1, String pass2, int generoId, MultipartFile archivo, String mail) throws ErrorServicio {
+    public Usuario registrarUsuario(String nombre, String apellido, String dni, Date fechaNacimiento, String pass1, String pass2, int generoId, MultipartFile archivo, String mail) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("Falta el nombre del usuario");
         }
@@ -89,6 +89,9 @@ public class UsuarioServicio implements UserDetailsService {
     
         Usuario usuario = new Usuario();
         usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
+        usuario.setDni(dni);
+        usuario.setFechaNacimiento(fechaNacimiento);
         String passCrypt = new BCryptPasswordEncoder().encode(pass);
         usuario.setPass(passCrypt);
         usuario.setGenero(validateGenero(generoId));
