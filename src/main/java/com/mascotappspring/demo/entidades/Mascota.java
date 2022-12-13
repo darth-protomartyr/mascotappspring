@@ -5,6 +5,7 @@ import com.mascotappspring.demo.enumeraciones.Color;
 import com.mascotappspring.demo.enumeraciones.Especie;
 import com.mascotappspring.demo.enumeraciones.Genero;
 import com.sun.istack.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -12,6 +13,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -51,8 +53,7 @@ public class Mascota {
     
     public Mascota() {
     }
-
-    public Mascota(String id, Especie especie, String nombre, String apodo, int energía, Date fechaAlta, Date fechaNacimiento, Date fechaUltimaModificacion, Boolean altaMascota, Genero gen, Color col, Usuario user) {
+    public Mascota(String id, Especie especie, String nombre, String apodo, int energía, Date fechaAlta, Date fechaNacimiento, Date fechaUltimaModificacion, Boolean altaMascota, Genero gen, Color col, Usuario user, Mascota matched) {
         this.id = id;
         this.especie = especie;
         this.nombre = nombre;
@@ -162,4 +163,5 @@ public class Mascota {
     public void setUser(Usuario user) {
         this.user = user;
     }
+
 }

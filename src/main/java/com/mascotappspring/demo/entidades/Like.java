@@ -1,13 +1,12 @@
 package com.mascotappspring.demo.entidades;
 
 
+import com.sun.istack.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -22,12 +21,23 @@ public class Like {
     private String id;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaLike;
-    @ManyToOne
-    private ArrayList<Mascota> likes;
-   
+    @OneToOne
+    private Mascota liker;
+    @OneToOne
+    private Mascota liked;
     private boolean alta;
-    
+    @NotNull
+    private boolean match;
+
     public Like() {
+    }
+
+    public Like(String id, Date fechaLike, Mascota liker, Mascota liked, boolean alta, boolean match) {
+        this.id = id;
+        this.fechaLike = fechaLike;
+        this.liker = liker;
+        this.alta = alta;
+        this.match= false;
     }
 
     public String getId() {
@@ -46,12 +56,12 @@ public class Like {
         this.fechaLike = fechaLike;
     }
 
-    public ArrayList<Mascota> getLikes() {
-        return likes;
+    public Mascota getLiker() {
+        return liker;
     }
 
-    public void setLikes(ArrayList<Mascota> likes) {
-        this.likes = likes;
+    public void setLiker(Mascota liker) {
+        this.liker = liker;
     }
 
     public boolean isAlta() {
@@ -62,6 +72,21 @@ public class Like {
         this.alta = alta;
     }
 
+    public Mascota getLiked() {
+        return liked;
+    }
+
+    public void setLiked(Mascota liked) {
+        this.liked = liked;
+    }
+
+    public boolean isMatch() {
+        return match;
+    }
+
+    public void setMatch(boolean match) {
+        this.match = match;
+    }
     
     
 }
