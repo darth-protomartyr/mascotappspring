@@ -7,25 +7,33 @@ package com.mascotappspring.demo.entidades;
 
 
 import com.mascotappspring.demo.entidades.Foto;
+import com.mascotappspring.demo.enumeraciones.Genero;
+import com.mascotappspring.demo.enumeraciones.Rol;
 import com.sun.istack.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.EnumType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.springframework.format.annotation.DateTimeFormat;
 /**
  *
  * @author Gonzalo
  */
 @Entity
+@Table(name = "usuario")
 public class Usuario {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -35,8 +43,6 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private String dni;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNacimiento;
     @NotNull
     private String pass;
     @NotNull
@@ -50,18 +56,22 @@ public class Usuario {
     private Boolean penalidad;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaPenalidad;
+    
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Mascota> mascotas;    
+    
     @OneToOne
     private com.mascotappspring.demo.entidades.Foto foto;
     private Boolean alta;
+    
     public Usuario() {
     }
 
-    public Usuario(String id, String nombre, String apellido, String dni, Date fechaNacimiento, String pass, String mail, com.mascotappspring.demo.enumeraciones.Genero genero, com.mascotappspring.demo.enumeraciones.Rol rol, Boolean solicitudBaja, Boolean penalidad, Date fechaPenalidad, Foto foto, Boolean alta) {
+    public Usuario(String id, String nombre, String apellido, String dni, String pass, String mail, Genero genero, Rol rol, Boolean solicitudBaja, Boolean penalidad, Date fechaPenalidad, List<Mascota> mascotas, Foto foto, Boolean alta) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.dni = dni;
-        this.fechaNacimiento = fechaNacimiento;
         this.pass = pass;
         this.mail = mail;
         this.genero = genero;
@@ -69,6 +79,7 @@ public class Usuario {
         this.solicitudBaja = solicitudBaja;
         this.penalidad = penalidad;
         this.fechaPenalidad = fechaPenalidad;
+        this.mascotas = mascotas;
         this.foto = foto;
         this.alta = alta;
     }
@@ -105,14 +116,6 @@ public class Usuario {
         this.dni = dni;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public String getPass() {
         return pass;
     }
@@ -129,19 +132,19 @@ public class Usuario {
         this.mail = mail;
     }
 
-    public com.mascotappspring.demo.enumeraciones.Genero getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(com.mascotappspring.demo.enumeraciones.Genero genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 
-    public com.mascotappspring.demo.enumeraciones.Rol getRol() {
+    public Rol getRol() {
         return rol;
     }
 
-    public void setRol(com.mascotappspring.demo.enumeraciones.Rol rol) {
+    public void setRol(Rol rol) {
         this.rol = rol;
     }
 
@@ -169,6 +172,14 @@ public class Usuario {
         this.fechaPenalidad = fechaPenalidad;
     }
 
+    public List<Mascota> getMascotas() {
+        return mascotas;
+    }
+
+    public void setMascotas(List<Mascota> mascotas) {
+        this.mascotas = mascotas;
+    }
+
     public Foto getFoto() {
         return foto;
     }
@@ -184,5 +195,5 @@ public class Usuario {
     public void setAlta(Boolean alta) {
         this.alta = alta;
     }
-
+    
 }

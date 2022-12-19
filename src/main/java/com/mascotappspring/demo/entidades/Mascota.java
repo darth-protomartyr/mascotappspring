@@ -7,13 +7,20 @@ import com.mascotappspring.demo.enumeraciones.Genero;
 import com.sun.istack.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,6 +30,8 @@ import org.hibernate.annotations.GenericGenerator;
  * @author Gonzalo
  */
 @Entity
+@Table(name = "mascota")
+
 public class Mascota {
 
 //    ATRIBUTOS
@@ -30,6 +39,9 @@ public class Mascota {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     protected String id;
+    @ManyToOne()
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
     @NotNull
     @Enumerated(EnumType.STRING)
     protected Especie especie;
@@ -48,13 +60,15 @@ public class Mascota {
     protected Genero gen;
     @Enumerated(EnumType.STRING)
     protected com.mascotappspring.demo.enumeraciones.Color col;
-    @ManyToOne
-    protected Usuario user;
-    
+    @ManyToMany(mappedBy = "mascotas")
+    private List<Par> pares = new ArrayList<Par>();
+
     public Mascota() {
     }
-    public Mascota(String id, Especie especie, String nombre, String apodo, int energía, Date fechaAlta, Date fechaNacimiento, Date fechaUltimaModificacion, Boolean altaMascota, Genero gen, Color col, Usuario user, Mascota matched) {
+
+    public Mascota(String id, Usuario usuario, Especie especie, String nombre, String apodo, int energía, Date fechaAlta, Date fechaNacimiento, Date fechaUltimaModificacion, Boolean altaMascota, Genero gen, Color col) {
         this.id = id;
+        this.usuario = usuario;
         this.especie = especie;
         this.nombre = nombre;
         this.apodo = apodo;
@@ -65,7 +79,7 @@ public class Mascota {
         this.altaMascota = altaMascota;
         this.gen = gen;
         this.col = col;
-        this.user = user;
+//        this.yuntas = yuntas;
     }
 
     public String getId() {
@@ -74,6 +88,14 @@ public class Mascota {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Especie getEspecie() {
@@ -156,12 +178,12 @@ public class Mascota {
         this.col = col;
     }
 
-    public Usuario getUser() {
-        return user;
-    }
-
-    public void setUser(Usuario user) {
-        this.user = user;
-    }
-
+//    public List<Yunta> getYuntas() {
+//        return yuntas;
+//    }
+//
+//    public void setPares(List<Yunta> yuntas) {
+//        this.yuntas = yuntas;
+//    }
+    
 }

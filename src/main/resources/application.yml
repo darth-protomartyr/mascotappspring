@@ -15,3 +15,4 @@ spring.mail.properties.mail.smpt.auth: true
 spring.mail.properties.mail.smtp.starttls.enable: true
 spring.mail.properties.mail.smtp.starttls.required: true
 spring.mail.properties.mail.smtp.quitwait: false
+

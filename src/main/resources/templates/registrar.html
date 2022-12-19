@@ -11,22 +11,21 @@
         <div class= "main">
             <div class ="main__card">
             <h2>Crear cuenta</h2>
-            <form th:action="@{/proceso-registro}" method="post" enctype="multipart/form-data">                     
+            <form th:action="@{/proceso-registro}" method="post" enctype="multipart/form-data">                    
                 <div class="form__container">
                     <p th:if="${error != null}" th:text="${error}" class="warn"></p>
                     <p th:if="${logout != null}" th:text="${error}" class="ok"></p>
                     <input type="text" placeholder="Nombre del Usuario" name="nom" th:value="${nom}"  required>
                     <input type="text" placeholder="Apellido de Usuario" name="ap" th:value="${ap}"  required>
-                    <input type="text" placeholder="DNI del Usuario" name="nom" th:value="${nom}"  required>
-                    <input type="date" th:field="${fnac}" id="fnac"/>
+                    <input type="text" placeholder="DNI del Usuario" name="dni" th:value="${dni}"  required>
                     <input type="password" placeholder="Ingrese su Password" name="pass1" th:value="${pass1}" required>
                     <input type="password" placeholder="Confirme su Password" name="pass2" th:value="${pass2}" required>
+                    <input type="email" placeholder="Ingrese su mail" name="mail" th:value="${mail}" required>
                     <p>Seleccione su género:</p>
-                    <select name="generoId" required>
-                        <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.gen}" th:selected="${generoId}" required></option>
+                    <select name="id" required>
+                        <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.genH}" th:selected="${id}" required></option>
                     </select>
                     <input class ="input-f"  name="archivo" type="file" accept="image/png, image/jpeg" th:value="${archivo}" required>
-                    <input type="email" placeholder="Ingrese su mail" name="mail" th:value="${mail}" required>
                     <button type="submit">Sign In</button>
                 </div>
             </form>

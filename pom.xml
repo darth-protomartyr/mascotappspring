@@ -16,6 +16,10 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>8</java.version>
+                <bootstrap.version>4.0.0-2</bootstrap.version>
+                <webjars-locator.version>0.30</webjars-locator.version>
+                <font-awesome.version>5.11.2</font-awesome.version>
+                <lombok.version>1.18.2</lombok.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -69,6 +73,7 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+                
 	</dependencies>
 
 	<build>

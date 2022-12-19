@@ -50,7 +50,7 @@ public class UsuarioServicio implements UserDetailsService {
     private NotificacionServicio notServ;
 //-----------------------------------------------
     @Transactional
-    public Usuario registrarUsuario(String nombre, String apellido, String dni, Date fechaNacimiento, String pass1, String pass2, int generoId, MultipartFile archivo, String mail) throws ErrorServicio {
+    public Usuario registrarUsuario(String nombre, String apellido, String dni, String pass1, String pass2, int id, MultipartFile archivo, String mail) throws ErrorServicio {
         if (nombre == null || nombre.isEmpty()) {
             throw new ErrorServicio("Falta el nombre del usuario");
         }
@@ -74,7 +74,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("El password ingresado posee menos de 4 caracteres");
         }
         
-        if (generoId != 1 && generoId != 2 && generoId != 3) {
+        if (id != 1 && id != 2 && id != 3) {
             throw new ErrorServicio("Falta ingresar el sexo del usuario");
         }
         
@@ -91,10 +91,9 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setNombre(nombre);
         usuario.setApellido(apellido);
         usuario.setDni(dni);
-        usuario.setFechaNacimiento(fechaNacimiento);
         String passCrypt = new BCryptPasswordEncoder().encode(pass);
         usuario.setPass(passCrypt);
-        usuario.setGenero(validateGenero(generoId));
+        usuario.setGenero(validateGenero(id));
         Foto foto = picServ.guardar(archivo);
         usuario.setFoto(foto);
         usuario.setAlta(true);
