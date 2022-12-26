@@ -8,10 +8,12 @@ package com.mascotappspring.demo.controladores;
 import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.entidades.Autor;
 import com.mascotappspring.demo.entidades.Libro;
+import com.mascotappspring.demo.entidades.Mascota;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import com.mascotappspring.demo.servicios.AutorServicio;
 import com.mascotappspring.demo.servicios.LibroServicio;
+import com.mascotappspring.demo.servicios.MascotaServicio;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,8 @@ public class FotoControlador {
     private AutorServicio autorServ;
     @Autowired
     private LibroServicio libroServ;
-
+    @Autowired
+    private MascotaServicio mascotaServ;
     
     @GetMapping("/perfil/{id}")
     public ResponseEntity<byte[]> fotoPartner(@PathVariable String id) {
@@ -89,4 +92,20 @@ public class FotoControlador {
         }
     }
     
+    @GetMapping("/mascota/{id}")
+    public ResponseEntity<byte[]> fotoMascota(@PathVariable String id) {
+        try {
+            Mascota mascota = mascotaServ.buscarMascotaId(id);
+            if (mascota.getFoto() == null) {
+                throw new ErrorServicio("La mascota no tiene una foto asignada.");
+            }
+            byte[] foto = mascota.getFoto().getContenido();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<>(foto, headers, HttpStatus.OK);
+        } catch (ErrorServicio ex) {
+            Logger.getLogger(FotoControlador.class.getName()).log(Level.SEVERE, null, ex);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

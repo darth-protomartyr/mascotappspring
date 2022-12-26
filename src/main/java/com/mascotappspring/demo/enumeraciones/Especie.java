@@ -18,17 +18,19 @@ public enum Especie {
     NS_NC("Indefinida", 6);
 
     String nameSpe;
-    int numSpe;
-    Especie(String nameSpe, int numSpe) {
+    int especieId;
+    Especie(String nameSpe, int especieId) {
         this.nameSpe = nameSpe;
-        this.numSpe = numSpe;
+        this.especieId = especieId;
     }
 
     public String getNameSpe() {
         return nameSpe;
     }
 
-    public int getNumSpe() {
-        return numSpe;
+    public int getEspecieId() {
+        return especieId;
     }
+
+
 }

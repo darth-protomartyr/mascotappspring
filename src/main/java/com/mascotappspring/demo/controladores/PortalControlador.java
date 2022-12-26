@@ -89,10 +89,10 @@ public class PortalControlador {
     }
     
     @PostMapping("/proceso-registro")
-    public String registro(ModelMap modelo, @RequestParam String nom, @RequestParam String ap, @RequestParam String dni, @RequestParam String pass1, @RequestParam String pass2, @RequestParam int id, MultipartFile archivo,@RequestParam String mail) throws ErrorServicio {
+    public String registro(ModelMap modelo, @RequestParam String nom, @RequestParam String ap, @RequestParam String dni, @RequestParam String pass1, @RequestParam String pass2, @RequestParam int genId, MultipartFile archivo,@RequestParam String mail) throws ErrorServicio {
         List<Genero> generos = new ArrayList<Genero>(Arrays.asList(Genero.values()));
         try {
-            usuarioServ.registrarUsuario(nom, ap, dni, pass1, pass2, id, archivo, mail);
+            usuarioServ.registrarUsuario(nom, ap, dni, pass1, pass2, genId, archivo, mail);
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             modelo.put("nom", nom);
@@ -102,7 +102,7 @@ public class PortalControlador {
             modelo.put("pass2", pass2);
             modelo.put("mail", mail);
             modelo.put("generos", generos);
-            modelo.put("id", id);
+            modelo.put("genId", genId);
             modelo.put("archivo", archivo);
             return "registrar.html";
         }

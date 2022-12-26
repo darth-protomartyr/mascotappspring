@@ -15,11 +15,11 @@ public enum Genero {
     OTRO("Otro", "Otro", 3);
     String genH;
     String genM;
-    int id;
+    int genId;
     private Genero(String genH, String genM, int id) {
         this.genH = genH;
         this.genM = genM;
-        this.id = id;
+        this.genId = id;
     }
 
     public String getGenH() {
@@ -30,7 +30,7 @@ public enum Genero {
         return genM;
     }
     
-    public int getId() {
-        return id;
+    public int getGenId() {
+        return genId;
     }
 }

@@ -25,18 +25,18 @@ public enum Color {
     CELESTE(13, "celeste"),
     NS_NC(14, "No sabe/No Contesta");
 
-    private int numCol;
+    private int colorId;
     private String nameCol;
 
     //Constructor
-    Color(int numCol, String nameCol) {
-        this.numCol = numCol;
+    Color(int colorId, String nameCol) {
+        this.colorId = colorId;
         this.nameCol = nameCol;
     }
 
     //Getters
     public int getNumCol() {
-        return numCol;
+        return colorId;
     }
 
     public String getNameCol() {

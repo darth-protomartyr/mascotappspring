@@ -22,8 +22,8 @@
                     <input type="password" placeholder="Confirme su Password" name="pass2" th:value="${pass2}" required>
                     <input type="email" placeholder="Ingrese su mail" name="mail" th:value="${mail}" required>
                     <p>Seleccione su género:</p>
-                    <select name="id" required>
-                        <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.genH}" th:selected="${id}" required></option>
+                    <select name="genId" required>
+                        <option th:each="genero : ${generos}" th:value="${genero.genId}" th:text="${genero.genH}" th:selected="${genId}" required></option>
                     </select>
                     <input class ="input-f"  name="archivo" type="file" accept="image/png, image/jpeg" th:value="${archivo}" required>
                     <button type="submit">Sign In</button>

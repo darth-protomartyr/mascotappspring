@@ -9,6 +9,9 @@
                     <a th:href="@{/inicio}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Inicio</a>
                 </li>
                 <li class="nav-item">
+                    <a th:href="@{/mascotas/mascota(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Mascotas</a>
+                </li>
+                <li class="nav-item">
                     <a th:href="@{/libros/libro(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Libros</a>
                 </li>
                 <li class="nav-item">

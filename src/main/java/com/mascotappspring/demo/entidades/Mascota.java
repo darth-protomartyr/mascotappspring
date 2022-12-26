@@ -4,22 +4,20 @@ package com.mascotappspring.demo.entidades;
 import com.mascotappspring.demo.enumeraciones.Color;
 import com.mascotappspring.demo.enumeraciones.Especie;
 import com.mascotappspring.demo.enumeraciones.Genero;
+import com.mascotappspring.demo.enumeraciones.Raza;
 import com.sun.istack.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -48,7 +46,6 @@ public class Mascota {
     @NotNull
     protected String nombre;
     protected String apodo;
-    protected int energía;
     @Temporal(TemporalType.TIMESTAMP)
     protected Date fechaAlta;
     @Temporal(TemporalType.TIMESTAMP)
@@ -60,26 +57,30 @@ public class Mascota {
     protected Genero gen;
     @Enumerated(EnumType.STRING)
     protected com.mascotappspring.demo.enumeraciones.Color col;
+    @Enumerated(EnumType.STRING)
+    protected com.mascotappspring.demo.enumeraciones.Raza raza;
     @ManyToMany(mappedBy = "mascotas")
     private List<Par> pares = new ArrayList<Par>();
+    @OneToOne
+    private com.mascotappspring.demo.entidades.Foto foto;
 
     public Mascota() {
     }
 
-    public Mascota(String id, Usuario usuario, Especie especie, String nombre, String apodo, int energía, Date fechaAlta, Date fechaNacimiento, Date fechaUltimaModificacion, Boolean altaMascota, Genero gen, Color col) {
+    public Mascota(String id, Usuario usuario, Especie especie, String nombre, String apodo, Date fechaAlta, Date fechaNacimiento, Date fechaUltimaModificacion, Boolean altaMascota, Genero gen, Color col, Raza raza, Foto foto) {
         this.id = id;
         this.usuario = usuario;
         this.especie = especie;
         this.nombre = nombre;
         this.apodo = apodo;
-        this.energía = energía;
         this.fechaAlta = fechaAlta;
-        this.fechaNacimiento = fechaNacimiento;
+//        this.fechaNacimiento = fechaNacimiento;
         this.fechaUltimaModificacion = fechaUltimaModificacion;
         this.altaMascota = altaMascota;
         this.gen = gen;
         this.col = col;
-//        this.yuntas = yuntas;
+        this.raza = raza;
+        this.foto = foto;
     }
 
     public String getId() {
@@ -120,14 +121,6 @@ public class Mascota {
 
     public void setApodo(String apodo) {
         this.apodo = apodo;
-    }
-
-    public int getEnergía() {
-        return energía;
-    }
-
-    public void setEnergía(int energía) {
-        this.energía = energía;
     }
 
     public Date getFechaAlta() {
@@ -178,12 +171,27 @@ public class Mascota {
         this.col = col;
     }
 
-//    public List<Yunta> getYuntas() {
-//        return yuntas;
-//    }
-//
-//    public void setPares(List<Yunta> yuntas) {
-//        this.yuntas = yuntas;
-//    }
-    
+    public Raza getRaza() {
+        return raza;
+    }
+
+    public void setRaza(Raza raza) {
+        this.raza = raza;
+    }
+
+    public List<Par> getPares() {
+        return pares;
+    }
+
+    public void setPares(List<Par> pares) {
+        this.pares = pares;
+    }
+
+    public Foto getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Foto foto) {
+        this.foto = foto;
+    }
 }

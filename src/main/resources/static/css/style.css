@@ -1,5 +1,5 @@
 body {
-    background-color: rgba(242, 4, 68, 1);
+    background-color: #223B38;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color:#affff0;
     font-size: 1em;
@@ -47,7 +47,7 @@ a:hover {
 button {
     display: block;
     background-color: #05F2C7;
-    color: #F20544;
+    color: #263947;
     border-radius: 5px;
     font-size:1.1em;
     font-weight: 600;
@@ -107,17 +107,17 @@ nav {
 }
 
 nav > a {
-    color: #F20544;
+    color: #263947;
     font-weight: bold;
 }
 
 nav > a:visited {
-    color: #F20544;
+    color: #263947;
     background-color: #4ED9CB;;
 }
 
 nav > a:hover {
-    background-color: #F20544;
+    background-color: #263947;
     color:#05F2C7;
     transition: background-color 1s;
 }
@@ -151,7 +151,8 @@ nav > a:hover {
 /*------------------------- MAIN -------------------------*/
 
 main {
-    background-image: url(../img/library.jpeg);
+    background-image: url(../img/pets.jpg
+);
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 64vh;
@@ -170,7 +171,7 @@ main {
     flex-direction: column;
     text-align: center;
     border-radius: 15px;
-    background-color: rgba(242, 4, 24, 0.5);
+    background-color: rgba(34, 59, 56, 0.5);
     padding: 2% 2%;
     margin: auto;
     max-width: 800px;
@@ -192,14 +193,14 @@ main {
     font-weight: 500;
     color: white;
     text-transform: uppercase;
-    background-color: #F20519;
+    background-color: #263947;
     padding: 0.5em;
     border-radius: 15px;
 }
 
 .ok {
     font-weight: 500;
-    color: #F20544;
+    color: #263947;
     text-transform: uppercase;
     background-color: rgb(2, 196, 105);
     padding: 0.5em;
@@ -269,7 +270,7 @@ main {
 .btn > a {
     display: block;
     background-color: #05F2C7;
-    color: #F20544;
+    color: #263947;
     border-radius: 5px;
     font-size:1.1em;
     font-weight: 600;
@@ -316,7 +317,7 @@ input {
 }
 
 input::placeholder {
-    color:#F20544;
+    color:#263947;
     font-weight: 500;
     padding-left: 0.5em;
 }
@@ -327,7 +328,7 @@ input::placeholder {
 }
 
 .input-f::before {
-    color:#F20544;
+    color:#263947;
     display: flex;
     justify-content: center;
     border-radius: 5px;
@@ -396,7 +397,7 @@ input::placeholder {
 .form__container__buscar > button {
     display: inline-block;
     background-color: #FFF;
-    color: #F20544;
+    color: #263947;
     border-radius: 0px 3px 3px 0px ;
     font-size:1em;
     /* font-weight: 600; */
@@ -420,7 +421,7 @@ input::placeholder {
 .object__btn > a, button {
     display: inline-block;
     background-color: #05F2C7;
-    color: #F20544;
+    color: #263947;
     border-radius: 5px;
     font-size:1em;
     font-weight: 500;
@@ -507,7 +508,7 @@ input::placeholder {
     flex-direction: column;
     text-align: center;
     border-radius: 15px;
-    background-color: rgba(242, 4, 24, 0.5);
+    background-color: rgba(34, 59, 56, 0.5);
     padding: 2% 2%;
     margin: auto;
     max-width: 800px;
@@ -543,7 +544,7 @@ input::placeholder {
 
 .object__btn-3 > button {
     display: inline-block;
-    color: #F20544;
+    color: #263947;
     font-size: 0.75em;
     font-weight: 500;
     border: none;
@@ -554,7 +555,7 @@ input::placeholder {
     margin: 10px;
     border-radius: 20px;
     padding: 5px;
-    background-color: #F20519;
+    background-color: #263947;
     color: #fff;
 }
 
@@ -651,7 +652,7 @@ R   R EEEEE SSSS  P      OOO  N   N SSSS  I   V   EEEEE
     .nav__button {
         display: inline-block;
         background-color: #05F2C7;
-        color: #F20544;
+        color: #263947;
         border-radius: 3px;
         /* font-size:0.em; */
         /* font-weight: 00; */
@@ -682,16 +683,40 @@ R   R EEEEE SSSS  P      OOO  N   N SSSS  I   V   EEEEE
 
 
 /* Color Theme Swatches in Hex */
+.Coleur-1-hex { color: #263947; }
+.Coleur-2-hex { color: #2B4C52; }
+.Coleur-3-hex { color: #223B38; }
+.Coleur-4-hex { color: #2B5242; }
+.Coleur-5-hex { color: #264730; }
+
+/* Color Theme Swatches in RGBA */
+.Coleur-1-rgba { color: rgba(38, 57, 71, 1); }
+.Coleur-2-rgba { color: rgba(43, 76, 82, 1); }
+.Coleur-3-rgba { color: rgba(34, 59, 56, 1); }
+.Coleur-4-rgba { color: rgba(43, 82, 66, 1); }
+.Coleur-5-rgba { color: rgba(38, 71, 48, 1); }
+
+/* Color Theme Swatches in HSLA */
+.Coleur-1-hsla { color: hsla(205, 30, 21, 1); }
+.Coleur-2-hsla { color: hsla(189, 31, 24, 1); }
+.Coleur-3-hsla { color: hsla(172, 26, 18, 1); }
+.Coleur-4-hsla { color: hsla(155, 31, 24, 1); }
+.Coleur-5-hsla { color: hsla(138, 30, 21, 1); }
+
+
+
+
+/* Color Theme Swatches in Hex */
 .Ilustración-1-hex { color: #F20519; }
 .Ilustración-2-hex { color: #730217; }
-.Ilustración-3-hex { color: #F20544; }
+.Ilustración-3-hex { color: #263947; }
 .Ilustración-4-hex { color: #4ED9CB; }
 .Ilustración-5-hex { color: #05F2C7; }
 
 /* Color Theme Swatches in RGBA */
 .Ilustración-1-rgba { color: rgba(242, 4, 24, 1); }
 .Ilustración-2-rgba { color: rgba(114, 2, 22, 1); }
-.Ilustración-3-rgba { color: rgba(242, 4, 68, 1); }
+.Ilustración-3-rgba { color: #223B38; }
 .Ilustración-4-rgba { color: rgba(78, 216, 202, 1); }
 .Ilustración-5-rgba { color: rgba(4, 242, 198, 1); }
 

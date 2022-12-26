@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es-AR" xmlns:th="https://www.thymeleaf.org">
+
+<head th:replace="/fragments/head :: head"></head>
+
+<body>
+
+    <header th:replace="/fragments/header :: header"> </header>
+
+    <main>
+        <div class= "main">
+            <div class ="main__card">
+                <h2>Ingresa tu mascota</h2>
+                <form th:action="@{/mascotas/proceso-ingresar(id=__${session.usuariosession.id}__)}" method="post" enctype="multipart/form-data">
+                    <div class="form__container">
+                        <p th:if="${error != null}" th:text="${error}" class="warn"></p>
+                        <p th:if="${logout != null}" th:text="${error}" class="ok"></p>
+                        <input type="text" placeholder="Nombre de la mascota" name="nombre" th:value="${nombre}"  required>
+                        <input type="text" placeholder="Apodo de la mascota" name="apodo" th:value="${apodo}"  required>
+                        <p>Seleccione la especie:</p>
+                        <select name="especieId" required>
+                            <option th:each="especie : ${especies}" th:value="${especie.especieId}" th:text="${especie.nameSpe}" th:selected="${especieId}" required></option>
+                        </select>
+                        <p>Seleccione el género:</p>
+                        <select name="genId" required>
+                            <option th:each="genero : ${generos}" th:value="${genero.genId}" th:text="${genero.genM}" th:selected="${genId}" required></option>
+                        </select>
+                        <p>Seleccione la Raza:</p>
+                        <select name="razaId" required>
+                            <option th:each="raza : ${razas}" th:value="${raza.razaId}" th:text="${raza.nameRaza}" th:selected="${razaId}" required></option>
+                        </select>
+                        <p>Seleccione el color:</p>
+                        <select name="colorId" required>
+                            <option th:each="color : ${colores}" th:value="${color.numCol}" th:text="${color.nameCol}" th:selected="${colorId}" required></option>
+                        </select>
+                        <input name="archivo" th:value="${archivo}" type="file" accept="image/png, image/jpeg" class ="input-f"  required>
+                        <button type="submit">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="/fragments/footer :: footer"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
