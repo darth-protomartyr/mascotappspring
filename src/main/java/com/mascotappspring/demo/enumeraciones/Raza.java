@@ -56,12 +56,12 @@ public enum Raza {
 
     //Atributos
     private int razaId;
-    private String nameRaza;
+    private String razaName;
     private int esp;
 
     //Constructor
-    Raza(int razaId, String nameRaza, int esp) {
-        this.nameRaza = nameRaza;
+    Raza(int razaId, String razaName, int esp) {
+        this.razaName = razaName;
         this.razaId = razaId;
         this.esp = esp;
     }
@@ -72,8 +72,8 @@ public enum Raza {
         return razaId;
     }
 
-    public String getNameRaza() {
-        return nameRaza;
+    public String getRazaName() {
+        return razaName;
     }
 
     public int getEsp() {

@@ -15,7 +15,10 @@ import com.mascotappspring.demo.enumeraciones.Genero;
 import com.mascotappspring.demo.enumeraciones.Raza;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
 import com.mascotappspring.demo.repositorios.MascotaRepositorio;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,9 @@ public class MascotaServicio {
     MascotaRepositorio mascotaRepo;
     @Autowired
     FotoServicio picServ;
+    @Autowired
+    ParServicio parServ;
+    
 
     @Transactional
     public Mascota crearMascota(Usuario usuario, int especieId, String nombre, String apodo, int genId, int colId, int razaId, MultipartFile archivo) throws ErrorServicio {
@@ -90,8 +96,6 @@ public class MascotaServicio {
         if (spe == 2 && race == 1) {
             throw new ErrorServicio("Usted no ingresó una raza felina.");
         }
-        
-    
         Mascota tobias = new Mascota();
         tobias.setUsuario(usuario);
         tobias.setEspecie(especie);
@@ -104,11 +108,44 @@ public class MascotaServicio {
         tobias.setRaza(raza);
         Foto foto = picServ.guardar(archivo);
         tobias.setFoto(foto);
-        
         return mascotaRepo.save(tobias);
     }
     
     
+    @Transactional(readOnly=true)
+    public List<Mascota> listarPetRace(String id, String idMascota) throws ErrorServicio {
+        Mascota pet = new Mascota();
+        Optional<Mascota> rta = mascotaRepo.buscaMascotaId(idMascota);
+        if (rta.isPresent()) {
+            pet = rta.get();
+        }
+//        String razaName = pet.getRaza().getRazaName();
+        Raza raza = pet.getRaza();
+        Optional <List<Mascota>> rta1 = mascotaRepo.listarMascotaRaza(raza);
+        List<Mascota> mascotas = new ArrayList<Mascota>();
+        if(rta1.isPresent()) {
+            mascotas = rta1.get();
+        } else {
+            throw new ErrorServicio("No hay otras mascotas con la raza de tu mascota");
+        }
+        mascotas.remove(pet);
+        List<Mascota> mascotasLk = parServ.listarLikeds(idMascota);
+        
+        if(mascotasLk.size()>0) {
+            Iterator<Mascota> it = mascotasLk.iterator();
+            while(it.hasNext()) {
+                Mascota mascota = it.next();
+                mascotas.remove(mascota);
+            }
+        }
+//        int size = mascotas.size();
+//        if(size == 0) {
+//            throw new ErrorServicio("No quedan otras mascotas de la misma raza.");
+//        }
+        return mascotas;
+    }
+
+
     @Transactional(readOnly=true)
     public Mascota buscarMascotaId(String id) throws ErrorServicio {
         Optional<Mascota> respuesta = mascotaRepo.findById(id);
@@ -119,144 +156,6 @@ public class MascotaServicio {
             throw new ErrorServicio("No se encontró la mascota solicitado");
         }
     }
-    
-    
-    
-//    
-//    @Transactional
-//    public void modificarMascota(String nombre, MultipartFile archivo, String id) throws ErrorServicio {
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaId(id);
-//
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("La mascota seleccionada no está en la base de datos");
-//        }
-//        
-//        Optional<Mascota> rta1 = mascotaRepo.buscaMascotaNomCompl(nombre);
-//        if (rta1.isPresent() && !nombre.equals(tobias.getNombre())) {
-//            throw new ErrorServicio("La mascota ya se encuentra registrado en la base de datos");
-//        }
-//        
-//        if (nombre == null) {
-//            tobias.setNombre(tobias.getNombre());
-//        } else {
-//            tobias.setNombre(nombre);
-//        }
-//        
-//        if (archivo == null) {
-//            tobias.setFoto(tobias.getFoto());
-//        }
-//        
-//        String idFoto = null;
-//        if (tobias.getFoto() != null){
-//            idFoto = tobias.getFoto().getId();
-//        }
-//        Foto foto = picServ.actualizar(idFoto, archivo);
-//        tobias.setFoto(foto);
-//        mascotaRepo.save(tobias);
-//    }
-//
-//    @Transactional
-//    public void bajaMascota(String id) throws ErrorServicio{
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaIdCompl(id);
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("La mascota seleccionado no está en la base de datos");
-//        }
-//        
-//        if (tobias.getAltaMascota().equals(true)) {
-//            tobias.setAltaMascota(false);
-//            mascotaRepo.save(tobias);
-//        } else {
-//            System.out.println("La mascota seleccionado ya se encuenstra dado de baja.");
-//        }
-//    }
-//
-//    @Transactional
-//    public void altaMascota(String id) throws ErrorServicio {
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaIdCompl(id);
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("La mascota seleccionado no está en la base de datos");
-//        }
-//        
-//        if (tobias.getAltaMascota().equals(false)) {
-//            tobias.setAltaMascota(true);
-//            mascotaRepo.save(tobias);
-//        } else {
-//           throw new ErrorServicio("La mascota seleccionado ya se encuenstra dado de baja.");
-//        }
-//    }
-//    
-//    
-//    @Transactional(readOnly = true)
-//    public Mascota consultaMascotaId(String id) throws ErrorServicio {
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaId(id);
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("El Mascota consultado no pertenece a una Mascota listado en la base de datos");
-//        }
-//        return tobias;
-//    }
-//    
-//    @Transactional(readOnly = true)
-//    public Mascota consultaMascotaIdCompl(String id) throws ErrorServicio {
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaIdCompl(id);
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("El Mascota consultado no pertenece a una Mascota listado en la base de datos");
-//        }
-//        return tobias;
-//    }
-//    
-//    
-//    @Transactional(readOnly = true)
-//    public Mascota consultaMascotaNom(String nombre) throws ErrorServicio {
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaNom(nombre);
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("El nombre seleccionado no pertenece a un Mascota listado en la base de datos");
-//        }
-//        return tobias;
-//    }
-//    
-//    @Transactional(readOnly = true)
-//    public Mascota consultaMascotaNomCompl(String nombre) throws ErrorServicio {
-//        Mascota tobias = null;
-//        Optional <Mascota> rta = mascotaRepo.buscaMascotaNomCompl(nombre);
-//        if (rta.isPresent()) {
-//            tobias = rta.get();
-//        } else {
-//            throw new ErrorServicio("El nombre seleccionado no pertenece a una Mascota listada en la base de datos");
-//        }
-//        return tobias;
-//    }
-//    
-//    
-//    @Transactional(readOnly = true)
-//    public List<Mascota> listarMascotasActivas() {
-//        List<Mascota>wrs = mascotaRepo.listarMascotaActiva();
-//        return wrs;
-//    }
-//    
-//    @Transactional(readOnly = true)
-//    public List<Mascota> listarMascotasCompletas() {
-//        List<Mascota>wrs = mascotaRepo.listarMascotaCompleta();
-//        return wrs;
-//    }
-
 
 
     static Genero validarGenero(int generoId) throws ErrorServicio {
@@ -272,7 +171,7 @@ public class MascotaServicio {
         }
     }
     
-        static Color validarColor(int colorId) throws ErrorServicio {
+    static Color validarColor(int colorId) throws ErrorServicio {
         switch (colorId) {
             case 1:
                 return Color.BLANCO;

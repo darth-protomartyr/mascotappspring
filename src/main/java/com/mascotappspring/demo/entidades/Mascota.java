@@ -9,6 +9,7 @@ import com.sun.istack.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -59,7 +60,7 @@ public class Mascota {
     protected com.mascotappspring.demo.enumeraciones.Color col;
     @Enumerated(EnumType.STRING)
     protected com.mascotappspring.demo.enumeraciones.Raza raza;
-    @ManyToMany(mappedBy = "mascotas")
+    @ManyToMany(mappedBy = "mascotas", cascade = CascadeType.ALL)
     private List<Par> pares = new ArrayList<Par>();
     @OneToOne
     private com.mascotappspring.demo.entidades.Foto foto;

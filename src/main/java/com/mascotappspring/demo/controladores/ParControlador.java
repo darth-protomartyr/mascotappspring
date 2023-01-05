@@ -13,13 +13,14 @@ import com.mascotappspring.demo.excepciones.ErrorServicio;
 import com.mascotappspring.demo.repositorios.MascotaRepositorio;
 import com.mascotappspring.demo.repositorios.EditorialRepositorio;
 import com.mascotappspring.demo.repositorios.LibroRepositorio;
-import com.mascotappspring.demo.repositorios.ParRepositorio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import com.mascotappspring.demo.servicios.LibroServicio;
 import com.mascotappspring.demo.servicios.MascotaServicio;
+import com.mascotappspring.demo.servicios.ParServicio;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,25 +37,22 @@ import org.springframework.web.multipart.MultipartFile;
  * @author Gonzalo
  */
 @Controller
-@RequestMapping("/mascotas")
-public class MascotaControlador {
+@RequestMapping("/parejas")
+public class ParControlador {
 
-    
-    @Autowired
-    private UsuarioServicio usuarioServ;    
-    @Autowired
-    private MascotaServicio mascotaServ;
+
+
     @Autowired
     private MascotaRepositorio mascotaRepo;
     @Autowired
-    private ParRepositorio parServ;
+    private ParServicio parServ;
+    @Autowired
+    private MascotaServicio mascotaServ;
 
-    
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
-    @GetMapping("/mascota")
-    public String mascotas(HttpSession session, @RequestParam String id, ModelMap modelo) throws ErrorServicio {
+    @GetMapping("/seleccionar")
+    public String seleccionar(HttpSession session, @RequestParam String id, ModelMap modelo) throws ErrorServicio {
         List<Mascota> mascotas = mascotaRepo.buscaMascotaUser(id);
-
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
@@ -63,60 +61,71 @@ public class MascotaControlador {
         modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
         String role = login.getRol().toString();
         modelo.put("role", role);
-        return "mascotas.html";
+        return "parejas-seleccionar.html";       
     }
-    
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
-    @GetMapping("/ingresar")
-    public String ingresar(HttpSession session, @RequestParam String id, ModelMap modelo){
-        Usuario login = (Usuario) session.getAttribute("usuariosession");
-        if (login == null || !login.getId().equals(id)) {
-            return "redirect:/login";
-        }
-        List<Genero> generos = new ArrayList<Genero>(Arrays.asList(Genero.values()));
-        List<Especie> especies = new ArrayList<Especie>(Arrays.asList(Especie.values()));
-        List<Color> colores = new ArrayList<Color>(Arrays.asList(Color.values()));
-        List<Raza> razas = new ArrayList<Raza>(Arrays.asList(Raza.values()));
-        modelo.put("generos", generos);
-        modelo.put("especies", especies);
-        modelo.put("colores", colores);
-        modelo.put("razas", razas);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
-        String role = login.getRol().toString();
-        modelo.put("role", role);
-        return "mascota-ingresar.html";
-    }
-    
-    
-    
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
-    @PostMapping("/proceso-ingresar")
-    public String procesoIngresar(HttpSession session, @RequestParam String id, @RequestParam int especieId, @RequestParam String nombre, @RequestParam String apodo, @RequestParam int genId, @RequestParam int colorId, @RequestParam int razaId, @RequestParam MultipartFile archivo, ModelMap modelo) throws ErrorServicio {
-        Usuario login = (Usuario) session.getAttribute("usuariosession");
-        if (login == null || !login.getId().equals(id)) {
-            return "redirect:/login";
-        }
 
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
+    @GetMapping("/proceso-seleccionar")
+    public String procesoSeleccionar(HttpSession session, @RequestParam String id, @RequestParam String mascotaId, ModelMap modelo) throws ErrorServicio{
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+        }
+        String role = login.getRol().toString();
+        Mascota pet = new Mascota();
+        Optional<Mascota> rta = mascotaRepo.buscaMascotaId(mascotaId);
+        if (rta.isPresent()) {
+            pet = rta.get();
+        }
+        try {
+            List<Mascota> razaMascotas = mascotaServ.listarPetRace(id, pet.getId());
+            modelo.put("razaMascotas", razaMascotas);
+            modelo.put("pet", pet);
+            modelo.put("role", role);
+            return "parejas.html";
+        } catch (ErrorServicio e) {
+            modelo.put("error", e.getMessage());
+            return "parejas-seleccionar.html";
+        }        
+    }
+
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
+    @PostMapping("/proceso-parear")
+    public String parear(HttpSession session, @RequestParam String id, @RequestParam String mascotaId1, @RequestParam String mascotaId2, ModelMap modelo) throws ErrorServicio {
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+        }
+        Mascota pet = new Mascota();
+        Optional<Mascota> rta = mascotaRepo.buscaMascotaId(id);
+        if (rta.isPresent()) {
+            pet = rta.get();   
+        }
+//        String mascotaRaceName = pet.getRaza().getRazaName();
+//        List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId(), mascotaRaceName);
+//        List<Mascota> razaMascotas = mascotaServ.listarPetRace(id, pet.getId());
+        List<Mascota> razaMascotas = parServ.listarLikeds(mascotaId1); //prueba 
+
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
-            mascotaServ.crearMascota( login, especieId, nombre, apodo, genId, colorId, razaId,archivo);
+            parServ.crearPar(mascotaId1, mascotaId2);
             modelo.put("tit", "Operación Exitosa");
-            modelo.put("subTit", "La Mascota fue ingresada a la base de datos correctamente.");
+            modelo.put("subTit", "Qué ansiedad...\n Estamos esperando la respuesta...");
             return "succes.html";
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
-            modelo.put("especieId", especieId);
-            modelo.put("nombre", nombre);
-            modelo.put("apodo", apodo);
-            modelo.put("genId", genId);
-            modelo.put("colId", colorId);
-            modelo.put("razaId", razaId);
-            modelo.put("archivo", archivo);
-            return "mascota-ingresar.html";
+            modelo.put("mascotaId1", mascotaId1);
+            modelo.put("mascotaId2", mascotaId1);
+            modelo.put("razaMascotas", razaMascotas);
+            modelo.put("pet", pet);
+            return ".html";
         }
     }
+    
+    
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
 //    @PostMapping("/proceso-buscar")
 //    public String buscar(HttpSession session, @RequestParam String id, @RequestParam String qmascota, ModelMap modelo) throws ErrorServicio{

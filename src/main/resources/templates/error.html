@@ -12,7 +12,9 @@
                 <div class="main__card">
                     <p class ="tit" th:text = "${codigo}"></p> 
                     <p class ="sub-tit" th:text = "${mensaje == null ? 'Intenta nuevamente' : mensaje}"></p> 
-                    <a th:if="${session.usuariosession == null}" th:href="@{/inicio}" class ="btn">Volver a Inicio</a>
+                    <div class="object__btn">
+                        <a href="javascript: history.go(-1)">Volver atrás</a>
+                    </div>
                 </div>
         </div>
     </main>

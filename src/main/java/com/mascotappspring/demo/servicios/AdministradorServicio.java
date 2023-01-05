@@ -47,7 +47,7 @@ public class AdministradorServicio {
         }
         List<Usuario> solicitantes = new ArrayList(solicitantesHS);
         return solicitantes;
-    }    
+    }   
 
     @Transactional(readOnly = true)
     public List<Orden> listarActivas() {

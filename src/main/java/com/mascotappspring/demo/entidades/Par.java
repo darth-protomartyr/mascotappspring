@@ -37,9 +37,9 @@ public class Par {
     private Date fechaAlta;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaMatch;
-//    private Mascota liker;
-//    private Mascota liked;
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private String liker;
+    private String liked;
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
             name= "par_mascota",
             joinColumns= @JoinColumn(name= "par_id"),
@@ -50,12 +50,15 @@ public class Par {
     public Par() {
     }
 
-    public Par(String id, Boolean alta, Boolean matched, Date fechaAlta, Date fechaMatch) {
+
+    public Par(String id, Boolean alta, Date fechaAlta, String liker, String liked, List<Mascota> mascotas) {
         this.id = id;
         this.alta = alta;
-        this.matched = matched;
+        this.matched = false;
         this.fechaAlta = fechaAlta;
-        this.fechaMatch = fechaMatch;
+        this.liker = liker;
+        this.liked = liked;
+        this.mascotas = mascotas;
     }
 
     public String getId() {
@@ -104,5 +107,21 @@ public class Par {
 
     public void setMascotas(List<Mascota> mascotas) {
         this.mascotas = mascotas;
+    }
+    
+        public String getLiker() {
+        return liker;
+    }
+
+    public void setLiker(String liker) {
+        this.liker = liker;
+    }
+
+    public String getLiked() {
+        return liked;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
     }
 }

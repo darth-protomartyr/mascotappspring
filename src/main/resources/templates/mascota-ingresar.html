@@ -27,7 +27,7 @@
                         </select>
                         <p>Seleccione la Raza:</p>
                         <select name="razaId" required>
-                            <option th:each="raza : ${razas}" th:value="${raza.razaId}" th:text="${raza.nameRaza}" th:selected="${razaId}" required></option>
+                            <option th:each="raza : ${razas}" th:value="${raza.razaId}" th:text="${raza.razaName}" th:selected="${razaId}" required></option>
                         </select>
                         <p>Seleccione el color:</p>
                         <select name="colorId" required>

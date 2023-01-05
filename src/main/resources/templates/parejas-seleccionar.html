@@ -4,18 +4,16 @@
 <head th:replace="/fragments/head :: head"></head>
 
 <body>
-
     <header th:replace="/fragments/header :: header"> </header>
-    
     <main>
         <div class = "main">
             <div class= "main__card">
-                <h3 class="main__card__h3">Mascotas</h3>
+                <h3 class="main__card__h3">Parejas</h3>
                 <div class="main__card__object">
                     <div class="object__button__container">
-                        <div class="object__btn">
-                            <a th:href="@{/mascotas/ingresar(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}">Ingresar Mascota</a>
-                        </div>
+                    </div>
+                    <div>
+                        <h3>Parejas</h3>
                     </div>
                     <div th:each="mascota:${mascotas}" class = "object--single--pic">
                         <div>
@@ -27,34 +25,21 @@
                                 <p class ="sub-tit">Nombre: <span th:text="${mascota.nombre}"></span></p>
                             </div>
                             <div>
-                                <p class ="sub-tit"> Apodo: <span th:text="${mascota.apodo}"></span></p>
+                                <p class ="sub-tit"> Raza: <span th:text="${mascota.raza.razaName}"></span></p>
                             </div>
                             <div>
-                                <p class ="sub-tit">Especie: <span th:text="${mascota.especie.nameSpe}"></span></p>
-                            </div>
-                            <div>
-                                <p class ="sub-tit">Raza: <span th:text="${mascota.raza.razaName}"></span></p>
-                            </div>
-                            <div>
-                                <p class ="sub-tit">Sexo: <span th:text="${mascota.gen.genM}"></span></p>
-                            </div>                        
-                            <div>
-                                <p class ="sub-tit">Pelaje: <span th:text="${mascota.col.nameCol}"></span></p>
+                                <p class ="sub-tit"> Dueño: <span th:text="${mascota.usuario.nombre}"></span></p>
                             </div>
                         </div>
                         <div class="object__btn">
-                            <a th:href="@{/parejas/proceso-seleccionar(id=__${session.usuariosession.id}__, mascotaId = __${mascota.id}__ )}">Buscar Pareja</a>
+                            <a th:href="@{/parejas/proceso-seleccionar(id=__${session.usuariosession.id}__, mascotaId = __${mascota.id}__)}">Buscar Pareja</a>
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
     </main>
-    
     <footer th:replace="/fragments/footer :: footer"></footer>
-    
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
 </body>
 </html>

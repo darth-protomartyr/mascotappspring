@@ -7,6 +7,7 @@ package com.mascotappspring.demo.repositorios;
 
 
 import com.mascotappspring.demo.entidades.Mascota;
+import com.mascotappspring.demo.enumeraciones.Raza;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,9 +20,6 @@ public interface MascotaRepositorio extends JpaRepository<Mascota, String>{
     
     @Query("SELECT e FROM Mascota e WHERE e.nombre = :nombre AND e.altaMascota = true AND e.usuario.id = :id")
     public Optional<Mascota> buscaMascotaNom (@Param("nombre") String nombre, @Param("id") String id);
-    
-    @Query("SELECT e FROM Mascota e WHERE e.usuario.id = :id AND e.altaMascota = true")
-    public Optional<Mascota> buscaMascotaUser (@Param("id") String id);
     
     @Query("SELECT e FROM Mascota e WHERE e.nombre = :nombre")
     public Optional<Mascota> buscaMascotaNomCompl (@Param("nombre") String nombre);
@@ -37,4 +35,21 @@ public interface MascotaRepositorio extends JpaRepository<Mascota, String>{
     
     @Query("SELECT e FROM Mascota e")
     public List<Mascota> listarMascotaCompleta();
+    
+    @Query("SELECT e FROM Mascota e WHERE e.usuario.id = :id AND e.altaMascota = true")
+    public List<Mascota> buscaMascotaUser (@Param("id") String id);
+    
+    @Query("SELECT e FROM Mascota e WHERE e.raza = :raza")
+    public Optional<List<Mascota>> listarMascotaRaza(@Param("raza") Raza raza);
+    
+//    @Query(value = "SELECT e FROM Mascota e WHERE raza = :#{#raza?.getRazaName()}", nativeQuery = true)
+//    List<Mascota> listarMascotaRaza(@Param("raza") Raza raza);
+    
+//    @Query("SELECT r FROM Raza r WHERE LOWER(r.raza) = LOWER(:#{#raza?.toString()})")
+//    public List<Mascota> listarMascotaRaza(@Param("raza") Raza raza);
+    
+    
+    
+    
+    
 }
