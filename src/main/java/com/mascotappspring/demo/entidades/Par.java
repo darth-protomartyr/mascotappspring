@@ -12,10 +12,12 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,38 +29,35 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Par {
     @Id
+//    @GeneratedValue(strategy= GenerationType.IDENTITY)
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @Column(unique = true)
     private Boolean alta;
     private Boolean matched;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaAlta;
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaMatch;
-    private String liker;
-    private String liked;
-    @ManyToMany(cascade = {CascadeType.ALL})
-    @JoinTable(
-            name= "par_mascota",
-            joinColumns= @JoinColumn(name= "par_id"),
-            inverseJoinColumns = @JoinColumn(name = "mascota_id"))
-    private List<Mascota> mascotas = new ArrayList<Mascota>();
+    @ManyToOne
+    @JoinColumn(name = "par_mascotaLR")
+    private Mascota liker;
+    @ManyToOne
+    @JoinColumn(name = "par_mascotaLD")
+    private Mascota liked;
 
 
     public Par() {
     }
 
 
-    public Par(String id, Boolean alta, Date fechaAlta, String liker, String liked, List<Mascota> mascotas) {
+    public Par(String id, Boolean alta, Date fechaAlta, Mascota liker, Mascota liked, List<Mascota> mascotas) {
         this.id = id;
         this.alta = alta;
         this.matched = false;
         this.fechaAlta = fechaAlta;
         this.liker = liker;
         this.liked = liked;
-        this.mascotas = mascotas;
     }
 
     public String getId() {
@@ -100,28 +99,20 @@ public class Par {
     public void setFechaMatch(Date fechaMatch) {
         this.fechaMatch = fechaMatch;
     }
-
-    public List<Mascota> getMascotas() {
-        return mascotas;
-    }
-
-    public void setMascotas(List<Mascota> mascotas) {
-        this.mascotas = mascotas;
-    }
     
-        public String getLiker() {
+        public Mascota getLiker() {
         return liker;
     }
 
-    public void setLiker(String liker) {
+    public void setLiker(Mascota liker) {
         this.liker = liker;
     }
 
-    public String getLiked() {
+    public Mascota getLiked() {
         return liked;
     }
 
-    public void setLiked(String liked) {
+    public void setLiked(Mascota liked) {
         this.liked = liked;
     }
 }

@@ -83,6 +83,12 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio("El mail ya se encuentra registrado en la base de datos");
         }
         
+        Optional<Usuario> rta1 = usuarioRepo.buscaUsuarioDni(dni);
+        if (rta1.isPresent()) {
+            throw new ErrorServicio("El dni ya se encuentra registrado en la base de datos");
+        }
+        
+        
         if (mail == null || mail.isEmpty()) {
             throw new ErrorServicio("Falta ingresar el sexo del usuario");
         }

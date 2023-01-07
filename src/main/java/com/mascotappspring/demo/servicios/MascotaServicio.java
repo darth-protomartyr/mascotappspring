@@ -113,36 +113,53 @@ public class MascotaServicio {
     
     
     @Transactional(readOnly=true)
-    public List<Mascota> listarPetRace(String id, String idMascota) throws ErrorServicio {
-        Mascota pet = new Mascota();
+    public List<Mascota> listarPetRace(String idMascota) throws ErrorServicio {
+        Mascota pet1 = new Mascota();
         Optional<Mascota> rta = mascotaRepo.buscaMascotaId(idMascota);
         if (rta.isPresent()) {
-            pet = rta.get();
+            pet1 = rta.get();
         }
-//        String razaName = pet.getRaza().getRazaName();
-        Raza raza = pet.getRaza();
+        Raza raza = pet1.getRaza();
+        List<Mascota> mascotasProv = new ArrayList<Mascota>();
         Optional <List<Mascota>> rta1 = mascotaRepo.listarMascotaRaza(raza);
-        List<Mascota> mascotas = new ArrayList<Mascota>();
         if(rta1.isPresent()) {
-            mascotas = rta1.get();
-        } else {
-            throw new ErrorServicio("No hay otras mascotas con la raza de tu mascota");
+            mascotasProv = rta1.get();
         }
-        mascotas.remove(pet);
-        List<Mascota> mascotasLk = parServ.listarLikeds(idMascota);
+        mascotasProv.remove(pet1);
         
-        if(mascotasLk.size()>0) {
-            Iterator<Mascota> it = mascotasLk.iterator();
-            while(it.hasNext()) {
-                Mascota mascota = it.next();
-                mascotas.remove(mascota);
+        List<Mascota> mascotasM = new ArrayList<Mascota>();
+        List<Mascota> mascotasH = new ArrayList<Mascota>();
+
+        Iterator<Mascota> it = mascotasProv.iterator();
+        while(it.hasNext()) {
+            Mascota pet2 = it.next();
+            switch (pet2.getGen().getGenId()) {
+                case 1:
+                    mascotasM.add(pet2);
+                    break;
+                case 2:
+                    mascotasH.add(pet2);
+                    break;
+                default:
+                    throw new ErrorServicio("El sexo de su mascota es otro");
             }
         }
-//        int size = mascotas.size();
-//        if(size == 0) {
-//            throw new ErrorServicio("No quedan otras mascotas de la misma raza.");
+        
+//        List<Mascota> mascotas = new ArrayList<Mascota>();
+//        if(pet1.getGen().getGenId()==1) {
+//            mascotas = mascotasH;
+//        } else {
+//            mascotas = mascotasM;
 //        }
-        return mascotas;
+        List<Mascota> mascotasLk = parServ.listarLikeds(idMascota);
+        if(mascotasLk.size()>0) {
+            Iterator<Mascota> it2 = mascotasLk.iterator();
+            while(it2.hasNext()) {
+                Mascota pet3 = it2.next();
+//                mascotas.remove(pet3);
+            }
+        }
+        return mascotasProv;
     }
 
 
@@ -153,7 +170,7 @@ public class MascotaServicio {
             Mascota mascota = respuesta.get();
             return mascota;
         } else {
-            throw new ErrorServicio("No se encontró la mascota solicitado");
+            throw new ErrorServicio("No se encontró la mascota solicitada");
         }
     }
 
@@ -170,6 +187,7 @@ public class MascotaServicio {
                 throw new ErrorServicio("No ingresó un dato válido en la categoria género");
         }
     }
+    
     
     static Color validarColor(int colorId) throws ErrorServicio {
         switch (colorId) {
@@ -206,6 +224,7 @@ public class MascotaServicio {
         }
     }
     
+    
     static Especie validarEspecie(int especieId) throws ErrorServicio {
         switch (especieId) {
             case 1:
@@ -224,6 +243,7 @@ public class MascotaServicio {
                 throw new ErrorServicio("No ingresó un dato válido en la categoria género");
         }
     }
+    
     
     static Raza validarRaza(int razaId) throws ErrorServicio {
         switch (razaId) {
@@ -288,17 +308,21 @@ public class MascotaServicio {
             case 30:
                 return Raza.AKITA;
             case 31:
-                return Raza.PERSA;
+                return Raza.OTRA_PERRO;    
             case 32:
-                return Raza.AZUL_RUSO;
+                return Raza.PERSA;
             case 33:
-                return Raza.SIAMÉS;
+                return Raza.AZUL_RUSO;
             case 34:
-                return Raza.SIBERIANO;
+                return Raza.SIAMÉS;
             case 35:
-                return Raza.BENGALÍ;
+                return Raza.SIBERIANO;
             case 36:
-                return Raza.OTRA;             
+                return Raza.BENGALÍ;
+            case 37:
+                return Raza.OTRA_GATO;
+            case 38:
+                return Raza.OTRA_INDISTINTA;
             default:
                 throw new ErrorServicio("No ingresó un dato válido en la categoria Color");
         }

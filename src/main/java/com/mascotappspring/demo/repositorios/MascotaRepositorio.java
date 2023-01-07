@@ -39,17 +39,7 @@ public interface MascotaRepositorio extends JpaRepository<Mascota, String>{
     @Query("SELECT e FROM Mascota e WHERE e.usuario.id = :id AND e.altaMascota = true")
     public List<Mascota> buscaMascotaUser (@Param("id") String id);
     
-    @Query("SELECT e FROM Mascota e WHERE e.raza = :raza")
+    @Query("SELECT e FROM Mascota e WHERE e.raza = :raza AND e.altaMascota = true")
     public Optional<List<Mascota>> listarMascotaRaza(@Param("raza") Raza raza);
-    
-//    @Query(value = "SELECT e FROM Mascota e WHERE raza = :#{#raza?.getRazaName()}", nativeQuery = true)
-//    List<Mascota> listarMascotaRaza(@Param("raza") Raza raza);
-    
-//    @Query("SELECT r FROM Raza r WHERE LOWER(r.raza) = LOWER(:#{#raza?.toString()})")
-//    public List<Mascota> listarMascotaRaza(@Param("raza") Raza raza);
-    
-    
-    
-    
     
 }

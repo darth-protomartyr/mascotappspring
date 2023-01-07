@@ -1,12 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mascotappspring.demo.controladores;
-
-
-
+//import com.mascotappspring.demo.entidades.Usuario;
+//import com.mascotappspring.demo.enumeraciones.Genero;
+//import com.mascotappspring.demo.excepciones.ErrorServicio;
+//import com.mascotappspring.demo.repositorios.UsuarioRepositorio;
+//import com.mascotappspring.demo.servicios.UsuarioServicio;
+//import java.util.ArrayList;
+//import java.util.Arrays;
+//import java.util.Date;
+//import java.util.List;
+//import java.util.Optional;
+//import javax.servlet.http.HttpSession;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Controller;
+//import org.springframework.ui.ModelMap;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PostMapping;
+//import org.springframework.web.bind.annotation.RequestMapping;
+//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.multipart.MultipartFile;
 
 import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.enumeraciones.Genero;
@@ -15,7 +26,6 @@ import com.mascotappspring.demo.repositorios.UsuarioRepositorio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import javax.servlet.http.HttpSession;
@@ -28,10 +38,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- *
- * @author Gonzalo
- */
+
+
+
+
 @Controller
 @RequestMapping("/")
 public class PortalControlador {

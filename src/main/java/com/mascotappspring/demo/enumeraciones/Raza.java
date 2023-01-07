@@ -41,14 +41,16 @@ public enum Raza {
     SHAR_PEI(28, "Shar Pei", 1),
     VIEJO_PASTOR_INGLÉS(29, "Viejo Pastor", 1),
     AKITA(30, "Akita", 1),
+    OTRA_PERRO(31, "Otra", 1),
 //  Razas Felinas
-    PERSA(31,"Persa", 2),
-    AZUL_RUSO(32, "Azul Ruso", 2),
-    SIAMÉS(33,"Siamés", 2),
-    SIBERIANO(34,"Siberiano", 2),
-    BENGALÍ(35,"Bengalí", 2),
+    PERSA(32,"Persa", 2),
+    AZUL_RUSO(33, "Azul Ruso", 2),
+    SIAMÉS(34,"Siamés", 2),
+    SIBERIANO(35,"Siberiano", 2),
+    BENGALÍ(36,"Bengalí", 2),
+    OTRA_GATO(37, "Otra", 2),
 //  Otros
-    OTRA(36,"Otra",3);
+    OTRA_INDISTINTA(38,"Otra",3);
     
     
 

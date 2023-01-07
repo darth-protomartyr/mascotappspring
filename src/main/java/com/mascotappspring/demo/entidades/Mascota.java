@@ -39,12 +39,9 @@ public class Mascota {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     protected String id;
     @ManyToOne()
-    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    @NotNull
     @Enumerated(EnumType.STRING)
     protected Especie especie;
-    @NotNull
     protected String nombre;
     protected String apodo;
     @Temporal(TemporalType.TIMESTAMP)
@@ -60,10 +57,9 @@ public class Mascota {
     protected com.mascotappspring.demo.enumeraciones.Color col;
     @Enumerated(EnumType.STRING)
     protected com.mascotappspring.demo.enumeraciones.Raza raza;
-    @ManyToMany(mappedBy = "mascotas", cascade = CascadeType.ALL)
-    private List<Par> pares = new ArrayList<Par>();
     @OneToOne
     private com.mascotappspring.demo.entidades.Foto foto;
+    
 
     public Mascota() {
     }
@@ -180,19 +176,11 @@ public class Mascota {
         this.raza = raza;
     }
 
-    public List<Par> getPares() {
-        return pares;
-    }
-
-    public void setPares(List<Par> pares) {
-        this.pares = pares;
-    }
-
     public Foto getFoto() {
         return foto;
     }
 
     public void setFoto(Foto foto) {
         this.foto = foto;
-    }
+    }    
 }

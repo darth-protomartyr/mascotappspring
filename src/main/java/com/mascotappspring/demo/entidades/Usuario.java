@@ -39,13 +39,11 @@ public class Usuario {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @NotNull
     private String nombre;
     private String apellido;
+    @Column(unique = true)
     private String dni;
-    @NotNull
     private String pass;
-    @NotNull
     @Column(unique = true)
     private String mail;
     @Enumerated(EnumType.STRING)
@@ -55,15 +53,10 @@ public class Usuario {
     private Boolean solicitudBaja;
     private Boolean penalidad;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPenalidad;
-    
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Mascota> mascotas;    
-    
+    private Date fechaPenalidad;    
     @OneToOne
     private com.mascotappspring.demo.entidades.Foto foto;
     private Boolean alta;
-    
     public Usuario() {
     }
 
@@ -79,7 +72,6 @@ public class Usuario {
         this.solicitudBaja = solicitudBaja;
         this.penalidad = penalidad;
         this.fechaPenalidad = fechaPenalidad;
-        this.mascotas = mascotas;
         this.foto = foto;
         this.alta = alta;
     }
@@ -172,14 +164,6 @@ public class Usuario {
         this.fechaPenalidad = fechaPenalidad;
     }
 
-    public List<Mascota> getMascotas() {
-        return mascotas;
-    }
-
-    public void setMascotas(List<Mascota> mascotas) {
-        this.mascotas = mascotas;
-    }
-
     public Foto getFoto() {
         return foto;
     }
@@ -195,5 +179,4 @@ public class Usuario {
     public void setAlta(Boolean alta) {
         this.alta = alta;
     }
-    
 }

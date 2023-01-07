@@ -1,6 +1,7 @@
 package com.mascotappspring.demo.servicios;
 
 
+import com.mascotappspring.demo.enumeraciones.Genero;
 import com.mascotappspring.demo.entidades.Mascota;
 import com.mascotappspring.demo.entidades.Par;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
@@ -38,7 +39,6 @@ public class ParServicio {
         } else {
             throw new ErrorServicio ("La mascota ingresada no se encuentra en la base de datos");            
         }
-        
         if (rta2.isPresent()) {
             mascota2 = rta1.get();
         } else {
@@ -47,14 +47,8 @@ public class ParServicio {
         par.setAlta(true);
         par.setMatched(false);
         par.setFechaAlta(new Date());
-        String id1 = mascota1.getId();
-        par.setLiker(id1);
-        String id2 = mascota2.getId();
-        par.setLiked(id2);
-        List<Mascota> mascotas = new ArrayList<Mascota>();
-        mascotas.add(mascota1);
-        mascotas.add(mascota2);
-        par.setMascotas(mascotas);
+        par.setLiker(mascota1);
+        par.setLiked(mascota2);
         return parRepo.save(par);
     }
 
@@ -66,11 +60,8 @@ public class ParServicio {
         Iterator<Par> it = paresLKD.iterator();
         while(it.hasNext()) {
             Par par = it.next();
-            Mascota pet = new Mascota();
-            String petId = par.getLiked();
-            Optional<Mascota> rta = mascotaRepo.buscaMascotaId(petId);
-            if (rta.isPresent()) {
-                pet = rta.get();
+            Mascota pet = par.getLiked();
+            if (pet != null) {
                 mascotas.add(pet);
             }
         }

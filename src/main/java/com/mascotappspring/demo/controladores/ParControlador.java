@@ -3,18 +3,9 @@ package com.mascotappspring.demo.controladores;
 
 import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.entidades.Mascota;
-import com.mascotappspring.demo.entidades.Editorial;
-import com.mascotappspring.demo.entidades.Libro;
-import com.mascotappspring.demo.enumeraciones.Color;
-import com.mascotappspring.demo.enumeraciones.Especie;
-import com.mascotappspring.demo.enumeraciones.Genero;
-import com.mascotappspring.demo.enumeraciones.Raza;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
 import com.mascotappspring.demo.repositorios.MascotaRepositorio;
-import com.mascotappspring.demo.repositorios.EditorialRepositorio;
-import com.mascotappspring.demo.repositorios.LibroRepositorio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
-import com.mascotappspring.demo.servicios.LibroServicio;
 import com.mascotappspring.demo.servicios.MascotaServicio;
 import com.mascotappspring.demo.servicios.ParServicio;
 import java.util.ArrayList;
@@ -79,7 +70,7 @@ public class ParControlador {
             pet = rta.get();
         }
         try {
-            List<Mascota> razaMascotas = mascotaServ.listarPetRace(id, pet.getId());
+            List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId());
             modelo.put("razaMascotas", razaMascotas);
             modelo.put("pet", pet);
             modelo.put("role", role);
@@ -103,10 +94,9 @@ public class ParControlador {
         if (rta.isPresent()) {
             pet = rta.get();   
         }
-//        String mascotaRaceName = pet.getRaza().getRazaName();
-//        List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId(), mascotaRaceName);
-//        List<Mascota> razaMascotas = mascotaServ.listarPetRace(id, pet.getId());
-        List<Mascota> razaMascotas = parServ.listarLikeds(mascotaId1); //prueba 
+
+        List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId());
+//        List<Mascota> razaMascotas = parServ.listarLikeds(mascotaId1); //prueba 
 
         String role = login.getRol().toString();
         modelo.put("role", role);
@@ -121,7 +111,7 @@ public class ParControlador {
             modelo.put("mascotaId2", mascotaId1);
             modelo.put("razaMascotas", razaMascotas);
             modelo.put("pet", pet);
-            return ".html";
+            return "error.html";
         }
     }
     

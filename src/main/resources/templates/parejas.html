@@ -16,7 +16,7 @@
                     </div>
                     <h4>Tu Mascota</h4>
                     <div class = "object--single--pic">
-                        
+                        <p th:if="${error != null}" th:text="${error}" class="warn"></p>
                         <div>
                             <img th:if="${pet.foto != null}" th:src="${'/foto/mascota/' + pet.id}" class="pic-square" alt="mascota">
                             <img th:if="${pet.foto == null}" src="/img/peticon.png" class="pic-square" alt="mascota">
@@ -56,7 +56,7 @@
                         </form>
                     </div>
                 </div>
-            </div>    
+            </div>
         </div>
     </main>
 

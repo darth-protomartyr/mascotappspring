@@ -40,6 +40,10 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     @Query("SELECT s FROM Usuario s WHERE s.mail = :mail AND s.alta = true")
     public Optional<Usuario> buscaUsuarioMail(String mail);
     
+    
+        @Query("SELECT s FROM Usuario s WHERE s.dni = :dni AND s.alta = true")
+    public Optional<Usuario> buscaUsuarioDni(String dni);
+    
     //Lista usuarios de alta
     @Query("SELECT s FROM Usuario s WHERE s.alta = true")
     public Optional<List<Usuario>> listarUsuarios();
