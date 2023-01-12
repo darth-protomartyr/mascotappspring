@@ -8,6 +8,7 @@ package com.mascotappspring.demo.servicios;
 
 import com.mascotappspring.demo.entidades.Mascota;
 import com.mascotappspring.demo.entidades.Foto;
+import com.mascotappspring.demo.entidades.Par;
 import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.enumeraciones.Color;
 import com.mascotappspring.demo.enumeraciones.Especie;
@@ -15,11 +16,14 @@ import com.mascotappspring.demo.enumeraciones.Genero;
 import com.mascotappspring.demo.enumeraciones.Raza;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
 import com.mascotappspring.demo.repositorios.MascotaRepositorio;
+import com.mascotappspring.demo.repositorios.ParRepositorio;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,7 +42,9 @@ public class MascotaServicio {
     FotoServicio picServ;
     @Autowired
     ParServicio parServ;
-    
+    @Autowired
+    ParRepositorio parRepo;
+
 
     @Transactional
     public Mascota crearMascota(Usuario usuario, int especieId, String nombre, String apodo, int genId, int colId, int razaId, MultipartFile archivo) throws ErrorServicio {
@@ -110,8 +116,8 @@ public class MascotaServicio {
         tobias.setFoto(foto);
         return mascotaRepo.save(tobias);
     }
-    
-    
+
+
     @Transactional(readOnly=true)
     public List<Mascota> listarPetRace(String idMascota) throws ErrorServicio {
         Mascota pet1 = new Mascota();
@@ -121,48 +127,90 @@ public class MascotaServicio {
         }
         Raza raza = pet1.getRaza();
         List<Mascota> mascotasProv = new ArrayList<Mascota>();
-        Optional <List<Mascota>> rta1 = mascotaRepo.listarMascotaRaza(raza);
+        Optional <List<Mascota>> rta1 = mascotaRepo.listarMascotaRaza(raza);//Lista raza
         if(rta1.isPresent()) {
             mascotasProv = rta1.get();
         }
-        mascotasProv.remove(pet1);
-        
-        List<Mascota> mascotasM = new ArrayList<Mascota>();
-        List<Mascota> mascotasH = new ArrayList<Mascota>();
-
+        mascotasProv.remove(pet1);//elimina mascota propia
+        List<Mascota> mascotasMacho = new ArrayList<Mascota>(); //lista mascota según sexo
+        List<Mascota> mascotasHembra = new ArrayList<Mascota>();
         Iterator<Mascota> it = mascotasProv.iterator();
         while(it.hasNext()) {
             Mascota pet2 = it.next();
-            switch (pet2.getGen().getGenId()) {
-                case 1:
-                    mascotasM.add(pet2);
-                    break;
-                case 2:
-                    mascotasH.add(pet2);
-                    break;
-                default:
-                    throw new ErrorServicio("El sexo de su mascota es otro");
+            if(pet2.getGen().equals(Genero.HOMBRE)) {
+                mascotasMacho.add(pet2);
+            } else if(pet2.getGen().equals(Genero.MUJER)) {
+                mascotasHembra.add(pet2);
             }
+        } 
+        List<Mascota> mascotas = new ArrayList<Mascota>();
+        Genero gene = pet1.getGen();
+        if(gene.equals(Genero.HOMBRE)) {
+            mascotas = mascotasHembra;
+        } else if(gene.equals(Genero.MUJER))  {
+            mascotas = mascotasMacho;
+        } else {
+            throw new ErrorServicio("El sexo de su mascota es otro");
         }
-        
-//        List<Mascota> mascotas = new ArrayList<Mascota>();
-//        if(pet1.getGen().getGenId()==1) {
-//            mascotas = mascotasH;
-//        } else {
-//            mascotas = mascotasM;
-//        }
-        List<Mascota> mascotasLk = parServ.listarLikeds(idMascota);
+        List<Mascota> mascotasLk = parServ.listarLikeds(idMascota); // elimina mascotas con like dado 
         if(mascotasLk.size()>0) {
             Iterator<Mascota> it2 = mascotasLk.iterator();
             while(it2.hasNext()) {
                 Mascota pet3 = it2.next();
-//                mascotas.remove(pet3);
-            }
+                mascotas.remove(pet3);
+            }   
         }
-        return mascotasProv;
+        List<Mascota> mascotasMd = listarMatches(idMascota); //elimina mascotas matcheadas
+        if(mascotasMd.size()>0) {
+            Iterator<Mascota> it2 = mascotasMd.iterator();
+            while(it2.hasNext()) {
+                Mascota pet4 = it2.next();
+                mascotas.remove(pet4);
+            }   
+        }
+        List<Par> parMascotas = parRepo.likers(idMascota);//elimina mascotas a quien le gustas
+        List<Mascota> mascotasLr = new ArrayList<Mascota>();
+        for (Par par : parMascotas) {
+            Mascota pet5 = new Mascota();
+            pet5 = par.getLiker();
+            mascotasLr.add(pet5);
+        }
+        if(mascotasLr.size()>0) {
+            Iterator<Mascota> it2 = mascotasLr.iterator();
+            while(it2.hasNext()) {
+                Mascota pet6 = it2.next();
+                mascotas.remove(pet6);
+            }   
+        }
+        return mascotas;
     }
-
-
+    
+    
+    @Transactional(readOnly=true)
+    public List<Mascota> listarMatches(String id) {
+        Mascota pet1 = new Mascota();
+        Optional<Mascota> rta = mascotaRepo.buscaMascotaId(id);
+        if(rta.isPresent()) {
+            pet1=rta.get(); 
+        }
+        List<Par> paresLR = parRepo.matchersLr(id);
+        List<Par> paresLD = parRepo.matchersLd(id);
+        paresLD.addAll(paresLR);
+        List<Mascota> mascotas1 = new ArrayList<Mascota>();
+        for (Par par : paresLD) {
+            Mascota pet2 = new Mascota();
+            pet2 = par.getLiked();
+            mascotas1.add(pet2);
+            pet2 = par.getLiker();
+            mascotas1.add(pet2);
+        }
+        Set<Mascota> petSet = new HashSet<>(mascotas1);
+        List<Mascota> mascotas = new ArrayList<Mascota>(petSet);
+        mascotas.remove(pet1);
+        return mascotas;
+    }
+    
+    
     @Transactional(readOnly=true)
     public Mascota buscarMascotaId(String id) throws ErrorServicio {
         Optional<Mascota> respuesta = mascotaRepo.findById(id);
@@ -327,4 +375,6 @@ public class MascotaServicio {
                 throw new ErrorServicio("No ingresó un dato válido en la categoria Color");
         }
     }
+
+
 }

@@ -32,7 +32,9 @@
                                 <p class ="sub-tit"> Dueño: <span th:text="${pet.usuario.nombre}"></span></p>
                             </div>
                         </div>
-                    </div>    
+                    </div>
+                    <h4>Pretendiente</h4>
+                    <p th:if="${successRaza != null}" th:text="${successRaza}" class="ok"></p>
                     <div th:each="razaMascota:${razaMascotas}" class = "object--single--pic">
                         <div>
                             <img th:if="${razaMascota.foto != null}" th:src="${'/foto/mascota/' + razaMascota.id}" class="pic-square" alt="mascota">
@@ -54,6 +56,49 @@
                                 <button type="submit">Like</button>
                             </div>
                         </form>
+                    </div>
+                    <h4>Ganado</h4>
+                    <p th:if="${successPar != null}" th:text="${successPar}" class="ok"></p>
+                    <div th:each="parMascota:${parMascotas}" class = "object--single--pic">
+                        <div>
+                            <img th:if="${parMascota.liker.foto != null}" th:src="${'/foto/mascota/' + parMascota.liker.id}" class="pic-square" alt="mascota">
+                            <img th:if="${parMascota.liker.foto == null}" src="/img/peticon.png" class="pic-square" alt="mascota">
+                        </div>
+                        <div class="object__data">
+                            <div>
+                                <p class ="sub-tit"> Nombre: <span th:text="${parMascota.liker.nombre}"></span></p>
+                            </div>
+                            <div>
+                                <p class ="sub-tit"> Raza: <span th:text="${parMascota.liker.raza.razaName}"></span></p>
+                            </div>
+                            <div>
+                                <p class ="sub-tit"> Dueño: <span th:text="${parMascota.liker.usuario.nombre}"></span></p>
+                            </div>
+                        </div>
+                        <form th:action="@{/parejas/proceso-matchear(id=__${pet.usuario.id}__, parId =__${parMascota.id}__, mascotaId =__${pet.id}__)}" method="post" enctype="multipart/form-data">
+                            <div class="object__btn">
+                                <button type="submit">Match</button>
+                            </div>
+                        </form>
+                    </div>
+                    <h3>MATCHES</h3>
+                    <p th:if="${successMatch != null}" th:text="${successMatch}" class="ok"></p>
+                    <div th:each="matchMascota:${matchMascotas}" class = "object--single--pic">
+                        <div>
+                            <img th:if="${matchMascota.foto != null}" th:src="${'/foto/mascota/' + matchMascota.id}" class="pic-square" alt="mascota">
+                            <img th:if="${matchMascota.foto == null}" src="/img/peticon.png" class="pic-square" alt="mascota">
+                        </div>
+                        <div class="object__data">
+                            <div>
+                                <p class ="sub-tit">Nombre: <span th:text="${matchMascota.nombre}"></span></p>
+                            </div>
+                            <div>
+                                <p class ="sub-tit"> Raza: <span th:text="${matchMascota.raza.razaName}"></span></p>
+                            </div>
+                            <div>
+                                <p class ="sub-tit"> Dueño: <span th:text="${matchMascota.usuario.nombre}"></span></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

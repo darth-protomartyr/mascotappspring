@@ -3,8 +3,10 @@ package com.mascotappspring.demo.controladores;
 
 import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.entidades.Mascota;
+import com.mascotappspring.demo.entidades.Par;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
 import com.mascotappspring.demo.repositorios.MascotaRepositorio;
+import com.mascotappspring.demo.repositorios.ParRepositorio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import com.mascotappspring.demo.servicios.MascotaServicio;
 import com.mascotappspring.demo.servicios.ParServicio;
@@ -31,10 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/parejas")
 public class ParControlador {
 
-
-
     @Autowired
     private MascotaRepositorio mascotaRepo;
+    @Autowired
+    private ParRepositorio parRepo;
     @Autowired
     private ParServicio parServ;
     @Autowired
@@ -52,7 +54,7 @@ public class ParControlador {
         modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
         String role = login.getRol().toString();
         modelo.put("role", role);
-        return "parejas-seleccionar.html";       
+        return "parejas-seleccionar.html";
     }
 
 
@@ -71,14 +73,35 @@ public class ParControlador {
         }
         try {
             List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId());
+            List<Par> parMascotas = parRepo.likers(mascotaId);
+            List<Mascota> matchMascotas = mascotaServ.listarMatches(pet.getId());
+
+            String successRaza = "";
+            String successPar = "";
+            String successMatch = "";
+
+            if(razaMascotas.size() == 0) { //test
+                successRaza = "No hay nuevas mascotas de la especie de tu mascota";
+            }
+            if(parMascotas.size() == 0) {
+                successPar = "Tu mascota no tiene solicitudes pendientes";
+            }
+            if(matchMascotas.size() == 0) {
+                successMatch = "Tu mascota no tiene matches";
+            }
+            modelo.put("successRaza", successRaza);
+            modelo.put("successPar", successPar);
+            modelo.put("successMatch", successMatch);
+            modelo.put("matchMascotas", matchMascotas);        
             modelo.put("razaMascotas", razaMascotas);
+            modelo.put("parMascotas", parMascotas);
             modelo.put("pet", pet);
             modelo.put("role", role);
             return "parejas.html";
         } catch (ErrorServicio e) {
             modelo.put("error", e.getMessage());
             return "parejas-seleccionar.html";
-        }        
+        }
     }
 
 
@@ -92,12 +115,8 @@ public class ParControlador {
         Mascota pet = new Mascota();
         Optional<Mascota> rta = mascotaRepo.buscaMascotaId(id);
         if (rta.isPresent()) {
-            pet = rta.get();   
+            pet = rta.get();
         }
-
-        List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId());
-//        List<Mascota> razaMascotas = parServ.listarLikeds(mascotaId1); //prueba 
-
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -106,6 +125,29 @@ public class ParControlador {
             modelo.put("subTit", "Qué ansiedad...\n Estamos esperando la respuesta...");
             return "succes.html";
         } catch (ErrorServicio e) {
+            List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId());
+            List<Par> parMascotas = parRepo.likers(mascotaId1);
+            List<Mascota> matchMascotas = mascotaServ.listarMatches(pet.getId());
+            String successRaza = "";
+            String successPar = "";
+            String successMatch = "";
+
+            if(razaMascotas.size() == 0) { //test
+                successRaza = "No hay nuevas mascotas de la especie de tu mascota";
+            }
+            if(parMascotas.size() == 0) {
+                successPar = "Tu mascota no tiene solicitudes pendientes";
+            }
+            if(matchMascotas.size() == 0) {
+                successMatch = "Tu mascota no tiene matches";
+            }
+            modelo.put("successRaza", successRaza);
+            modelo.put("successPar", successPar);
+            modelo.put("successMatch", successMatch);
+
+            modelo.put("matchMascotas", matchMascotas);
+            modelo.put("razaMascotas", razaMascotas);
+            modelo.put("parMascotas", parMascotas);
             modelo.put("error", e.getMessage());
             modelo.put("mascotaId1", mascotaId1);
             modelo.put("mascotaId2", mascotaId1);
@@ -114,8 +156,58 @@ public class ParControlador {
             return "error.html";
         }
     }
-    
-    
+
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
+    @PostMapping("/proceso-matchear")
+    public String matchear(HttpSession session, @RequestParam String id, @RequestParam String parId, @RequestParam String mascotaId, ModelMap modelo) throws ErrorServicio {
+        Usuario login = (Usuario) session.getAttribute("usuariosession");
+        if (login == null || !login.getId().equals(id)) {
+            return "redirect:/login";
+        }
+        Mascota pet = new Mascota();
+        Optional<Mascota> rta = mascotaRepo.buscaMascotaId(mascotaId);
+        if (rta.isPresent()) {
+            pet = rta.get();
+        }
+        try {
+            parServ.matcher(parId);
+            modelo.put("tit", "Operación Exitosa");
+            modelo.put("subTit", "Pura ansiedad...\n Estamos esperando la respuesta...");
+            return "succes.html";
+        } catch (ErrorServicio e) {
+            List<Mascota> razaMascotas = mascotaServ.listarPetRace(pet.getId());
+            List<Par> parMascotas =  parRepo.likers(mascotaId);
+            List<Mascota> matchMascotas = mascotaServ.listarMatches(pet.getId());
+            String successRaza = "";
+            String successPar = "";
+            String successMatch = "";
+
+            if(razaMascotas.size() == 0 && parMascotas.size() == 0 ) { //test
+                successRaza = "No hay nuevas mascotas de la misma especie";
+            } else if(razaMascotas.size() == 0 && parMascotas.size() > 0 ) {
+                successRaza = "Hay nuevas mascotas de la sección solicitantes";
+            }
+            if(parMascotas.size() == 0) {
+                successPar = "Tu mascota no tiene solicitudes pendientes";
+            }            
+            if(matchMascotas.size() == 0) {
+                successMatch = "Tu mascota no tiene nmatches.";
+            }
+            modelo.put("successRaza", successRaza);
+            modelo.put("successPar", successPar);
+            modelo.put("successMatch", successMatch);
+            modelo.put("matchMascotas", matchMascotas);
+            modelo.put("razaMascotas", razaMascotas);
+            modelo.put("parMascotas", parMascotas);
+            modelo.put("razaMascotas", razaMascotas);
+            modelo.put("pet", pet);
+            modelo.put("error", e.getMessage());
+            return "error.html";
+        }
+    }
+
+
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
 //    @PostMapping("/proceso-buscar")
 //    public String buscar(HttpSession session, @RequestParam String id, @RequestParam String qmascota, ModelMap modelo) throws ErrorServicio{

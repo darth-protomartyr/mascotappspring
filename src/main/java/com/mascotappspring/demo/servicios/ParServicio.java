@@ -40,7 +40,7 @@ public class ParServicio {
             throw new ErrorServicio ("La mascota ingresada no se encuentra en la base de datos");            
         }
         if (rta2.isPresent()) {
-            mascota2 = rta1.get();
+            mascota2 = rta2.get();
         } else {
             throw new ErrorServicio ("La mascota ingresada no se encuentra en la base de datos");            
         }
@@ -56,6 +56,7 @@ public class ParServicio {
     @Transactional(readOnly = true)
     public List<Mascota> listarLikeds(String idMascota) {
         List<Par> paresLKD = parRepo.likeds(idMascota);
+
         List<Mascota> mascotas = new ArrayList<Mascota>();
         Iterator<Par> it = paresLKD.iterator();
         while(it.hasNext()) {
@@ -66,5 +67,18 @@ public class ParServicio {
             }
         }
         return mascotas;
+    }
+
+
+    @Transactional
+    public void matcher(String parId) throws ErrorServicio {
+        Par par = new Par();
+        Optional<Par> rta = parRepo.findById(parId);
+        if (rta.isPresent()) {
+            par = rta.get();
+        } else {
+            throw new ErrorServicio ("No pudo concretarse el match");            
+        }
+        par.setMatched(true);
     }
 }
