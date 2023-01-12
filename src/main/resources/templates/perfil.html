@@ -20,7 +20,7 @@
                         <input type="password" placeholder="Confirme su Password" name=pass2 th:value="${pass2}">
                         <p>Seleccione su género:</p>
                         <select name="generoId">
-                            <option th:each="genero : ${generos}" th:value="${genero.id}" th:text="${genero.gen}" th:selected="${perfil.genero !=null && genero.id == perfil.genero.id}"></option>
+                            <option th:each="genero : ${generos}" th:value="${genero.genId}" th:text="${genero.genH}" th:selected="${perfil.genero !=null && genero.genId == perfil.genero.genId}"></option>
                         </select>
                         <input class ="input-f"  name="archivo" type="file" accept="image/png, image/jpeg" th:value="${perfil.foto}">
                         <input type="email" placeholder="Ingrese su mail" name="mail" th:value="${perfil.mail}" required>
@@ -29,8 +29,6 @@
                 </form>
                 
                 <h3>Baja de cuenta</h3>
-                <p class="warn">Si desea solicitar la baja de su cuenta recuerde que no debe tener devoluciones pendientes.</p>
-                <p class="warn">Una vez dada la baja podrá ingresar a su cuenta pero no podrá realizar niniguna solicitud</p>
                 <form th:action="@{/perfiles/iniciar-proceso-baja-cuenta(id=__${perfil.id}__)}" method="post" enctype="multipart/form-data">
                     <input type="text" placeholder="Ingrese su nombre para confirmar baja" name="nombre">
                     <div class="form__container object__btn object__btn-2">                    

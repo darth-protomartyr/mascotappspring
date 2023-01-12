@@ -50,17 +50,14 @@ public class Usuario {
     private com.mascotappspring.demo.enumeraciones.Genero genero;
     @Enumerated(EnumType.STRING)
     private com.mascotappspring.demo.enumeraciones.Rol rol;
-    private Boolean solicitudBaja;
-    private Boolean penalidad;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaPenalidad;    
+    private Boolean solicitudBaja;   
     @OneToOne
     private com.mascotappspring.demo.entidades.Foto foto;
     private Boolean alta;
     public Usuario() {
     }
 
-    public Usuario(String id, String nombre, String apellido, String dni, String pass, String mail, Genero genero, Rol rol, Boolean solicitudBaja, Boolean penalidad, Date fechaPenalidad, List<Mascota> mascotas, Foto foto, Boolean alta) {
+    public Usuario(String id, String nombre, String apellido, String dni, String pass, String mail, Genero genero, Rol rol, Boolean solicitudBaja, Date fechaPenalidad, List<Mascota> mascotas, Foto foto, Boolean alta) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -70,8 +67,6 @@ public class Usuario {
         this.genero = genero;
         this.rol = rol;
         this.solicitudBaja = solicitudBaja;
-        this.penalidad = penalidad;
-        this.fechaPenalidad = fechaPenalidad;
         this.foto = foto;
         this.alta = alta;
     }
@@ -146,22 +141,6 @@ public class Usuario {
 
     public void setSolicitudBaja(Boolean solicitudBaja) {
         this.solicitudBaja = solicitudBaja;
-    }
-
-    public Boolean getPenalidad() {
-        return penalidad;
-    }
-
-    public void setPenalidad(Boolean penalidad) {
-        this.penalidad = penalidad;
-    }
-
-    public Date getFechaPenalidad() {
-        return fechaPenalidad;
-    }
-
-    public void setFechaPenalidad(Date fechaPenalidad) {
-        this.fechaPenalidad = fechaPenalidad;
     }
 
     public Foto getFoto() {

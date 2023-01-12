@@ -45,7 +45,7 @@ public class PrestamoControlador {
             return "redirect:/login";
         }
         listas(modelo,id);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "prestamos.html";
@@ -59,7 +59,7 @@ public class PrestamoControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {                       
@@ -84,7 +84,7 @@ public class PrestamoControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         prestamoServ.bajaSolicitud(solicitId);

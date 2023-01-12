@@ -14,18 +14,6 @@
                 <li class="nav-item">
                     <a th:href="@{/parejas/seleccionar(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Parejas</a>
                 </li>
-                <li class="nav-item">
-                    <a th:href="@{/libros/libro(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Libros</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/autores/autor(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Autores</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/editoriales/editorial(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Editoriales</a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/prestamos/prestamo(id=__${session.usuariosession.id}__)}" th:if="${session.usuariosession != null}" class="header__nav__enlace">Prestamos</a>
-                </li>
             </ul>
         </div>
     </div>

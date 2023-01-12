@@ -60,7 +60,7 @@ public class MascotaControlador {
             return "redirect:/login";
         }
         modelo.put("mascotas", mascotas);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "mascotas.html";
@@ -81,7 +81,7 @@ public class MascotaControlador {
         modelo.put("especies", especies);
         modelo.put("colores", colores);
         modelo.put("razas", razas);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "mascota-ingresar.html";
@@ -97,7 +97,7 @@ public class MascotaControlador {
             return "redirect:/login";
         }
 
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -124,7 +124,7 @@ public class MascotaControlador {
 //        if (login == null || !login.getId().equals(id)) {
 //            return "redirect:/login";
 //        }
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        Libro mascota= null;
@@ -148,7 +148,7 @@ public class MascotaControlador {
 //        if (login == null || !login.getId().equals(id)) {
 //            return "redirect:/login";
 //        }
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        modelo.put("mascotas", mascotas);
@@ -166,7 +166,7 @@ public class MascotaControlador {
 //        }
 //        List<Mascota> mascotas = mascotaRepo.findAll();
 //        List<Editorial> editoriales = ediRepo.findAll();
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        try {
@@ -198,7 +198,7 @@ public class MascotaControlador {
 //        List<Mascota> mascotas = mascotaRepo.findAll();
 //        List<Editorial> editoriales = ediRepo.findAll();
 //        Libro mascota = mascotaRepo.getById(mascotaId);
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        modelo.put("mascota", mascota);
@@ -215,7 +215,7 @@ public class MascotaControlador {
 //        if (login == null || !login.getId().equals(id)) {
 //            return "redirect:/login";
 //        }
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        List<Mascota> mascotas = mascotaRepo.findAll();
@@ -251,7 +251,7 @@ public class MascotaControlador {
 //        List<Libro> mascotas = mascotaServ.listarLibrosActivos();
 //        modelo.put("mascotas", mascotas);
 //        
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        return "mascotas-lista-activos.html";
@@ -267,7 +267,7 @@ public class MascotaControlador {
 //        }
 //        List<Libro> mascotas = mascotaRepo.listarLibrosCompleta();
 //        modelo.put("mascotas", mascotas);
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        return "mascotas-lista-completa.html";
@@ -283,7 +283,7 @@ public class MascotaControlador {
 //        }
 //        
 //        
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        try {      
@@ -307,7 +307,7 @@ public class MascotaControlador {
 //        }
 //        
 //        
-//        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+//        
 //        String role = login.getRol().toString();
 //        modelo.put("role", role);
 //        try {     

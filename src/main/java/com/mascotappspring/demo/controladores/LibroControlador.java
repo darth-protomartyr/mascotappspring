@@ -55,7 +55,7 @@ public class LibroControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "libros.html";
@@ -69,7 +69,7 @@ public class LibroControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         Libro libro= null;
@@ -93,7 +93,7 @@ public class LibroControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         modelo.put("autores", autores);
@@ -111,7 +111,7 @@ public class LibroControlador {
         }
         List<Autor> autores = autorRepo.findAll();
         List<Editorial> editoriales = ediRepo.findAll();
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -143,7 +143,7 @@ public class LibroControlador {
         List<Autor> autores = autorRepo.findAll();
         List<Editorial> editoriales = ediRepo.findAll();
         Libro libro = libroRepo.getById(libroId);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         modelo.put("libro", libro);
@@ -160,7 +160,7 @@ public class LibroControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         List<Autor> autores = autorRepo.findAll();
@@ -196,7 +196,7 @@ public class LibroControlador {
         List<Libro> libros = libroServ.listarLibrosActivos();
         modelo.put("libros", libros);
         
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "libros-lista-activos.html";
@@ -212,7 +212,7 @@ public class LibroControlador {
         }
         List<Libro> libros = libroRepo.listarLibrosCompleta();
         modelo.put("libros", libros);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "libros-lista-completa.html";
@@ -228,7 +228,7 @@ public class LibroControlador {
         }
         
         
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {      
@@ -252,7 +252,7 @@ public class LibroControlador {
         }
         
         
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {     

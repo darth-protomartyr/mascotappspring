@@ -44,7 +44,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         
@@ -61,7 +61,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         
@@ -84,7 +84,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "autor-ingresar.html";
@@ -98,7 +98,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }       
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -122,7 +122,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         
@@ -143,7 +143,7 @@ public class AutorControlador {
         }
         List<Autor> autores = autorRepo.listarAutorCompleta();
         modelo.put("autores", autores);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "autores-lista-completa.html";
@@ -157,7 +157,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         Autor autor = autorServ.consultaAutorId(autorId);
@@ -173,7 +173,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -195,7 +195,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {     
@@ -217,7 +217,7 @@ public class AutorControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {       

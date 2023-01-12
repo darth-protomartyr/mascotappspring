@@ -47,7 +47,7 @@ public class EditorialControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         
@@ -63,7 +63,7 @@ public class EditorialControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         
@@ -87,7 +87,7 @@ public class EditorialControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "editorial-ingresar.html";
@@ -101,7 +101,7 @@ public class EditorialControlador {
             if (login == null || !login.getId().equals(id)) {
                 return "redirect:/login";
             }
-            modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+            
         String role = login.getRol().toString();
         modelo.put("role", role);   
     try {
@@ -124,7 +124,7 @@ public class EditorialControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         
@@ -144,7 +144,7 @@ public class EditorialControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         return "editoriales-lista-completa.html";
@@ -159,7 +159,7 @@ public class EditorialControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);        
         Editorial editorial = editorialServ.consultaEditorialId(ediId);
@@ -176,7 +176,7 @@ public class EditorialControlador {
             if (login == null || !login.getId().equals(id)) {
                 return "redirect:/login";
             }
-            modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+            
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -199,7 +199,7 @@ public class EditorialControlador {
             if (login == null || !login.getId().equals(id)) {
                 return "redirect:/login";
             }
-            modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+            
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -221,7 +221,7 @@ public class EditorialControlador {
             if (login == null || !login.getId().equals(id)) {
                 return "redirect:/login";
             }
-            modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+            
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {

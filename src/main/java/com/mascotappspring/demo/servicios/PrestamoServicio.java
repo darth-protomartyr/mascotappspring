@@ -67,10 +67,6 @@ public class PrestamoServicio {
             throw new ErrorServicio("No hay un socio registrado con ese nombre.");
         }
         
-        if (usuarioPrestamo.getPenalidad() == true) {
-            throw new ErrorServicio("Usted se encuentra penalizado para el préstamo de Libros");
-        }
-        
         Libro libroPrestamo = null; 
         Optional<Libro> rta1 = libroRepo.buscaLibroId(libroId);
         if(rta1.isPresent()) {
@@ -129,27 +125,7 @@ public class PrestamoServicio {
     
     
     
-    @Transactional
-    public void bajaPrestamo(String idPrestamo, String ordenId) throws ErrorServicio, ParseException {
-        Prestamo prestamo = null;
-        Optional <Prestamo> rta = prestamoRepo.findById(idPrestamo);
-        if (rta.isPresent()) {
-            prestamo = rta.get();
-        }        
-        Usuario usuario = prestamo.getUsuario();
-        Libro libro = prestamo.getLibro();      
-        prestamo.setAlta(false);
-        prestamo.setFechaBaja(new Date());
-        Date dateBaja = prestamo.getFechaBaja();
-        Date dateVenc = prestamo.getFechaDevolucion();
-        Date datePen = usuario.getFechaPenalidad();
-        if (dateVenc.before(dateBaja)) {
-            usuario.setPenalidad(Boolean.TRUE);
-            usuario.setFechaPenalidad(diasPenalidad(dateBaja, dateVenc, datePen));
-        }
-        libro.setEjemplaresPrestados(libro.getEjemplaresPrestados() - 1);
-        libro.setEjemplaresRestantes(libro.getEjemplaresRestantes() + 1);
-    }
+
     
 
     static LocalDate convertToLocalDateViaMilisecond(Date dateToConvert) {

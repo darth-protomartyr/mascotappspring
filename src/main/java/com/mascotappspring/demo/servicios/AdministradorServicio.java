@@ -81,48 +81,4 @@ public class AdministradorServicio {
         usuario.setAlta(Boolean.FALSE);
         usuarioRepo.save(usuario);
     }
-    
-    
-    @Transactional
-    public List<Usuario> listarActualizarPenalidades() throws ErrorServicio {
-        List <Usuario> usuarios = new ArrayList();
-        Optional <List<Usuario>> rta = usuarioRepo.ListarUsuarioIdAltaPenAlta();
-        if(rta.isPresent()) {
-            usuarios = rta.get();
-        }    
-        
-        //Actualiza el estado de la penalidad al momento presente
-        
-        
-
-        Iterator<Usuario> it = usuarios.iterator();
-        while(it.hasNext()) {
-            Usuario usuario = it.next();
-            if (usuario.getFechaPenalidad().before(new Date())) {
-                usuario.setFechaPenalidad(null);
-                usuario.setPenalidad(Boolean.FALSE);
-                usuarioRepo.save(usuario);
-//                usuarios.remove(usuario);        
-            }
-        }
-        
-        Optional <List<Usuario>> rta1 = usuarioRepo.ListarUsuarioIdAltaPenAlta();
-        if(rta1.isPresent()) {
-            usuarios = rta1.get();
-        }
-        
-        
-        
-//        for (Usuario usuario : usuarios) {
-//            
-//            if (usuario.getFechaPenalidad().before(new Date())) {
-//                usuario.setFechaPenalidad(null);
-//                usuario.setPenalidad(Boolean.FALSE);
-//                usuarioRepo.save(usuario);
-////                usuarios.remove(usuario);        
-//            }
-//        }
-        
-        return usuarios;
-    }
 }

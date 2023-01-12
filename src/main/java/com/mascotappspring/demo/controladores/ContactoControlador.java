@@ -36,7 +36,7 @@ public class ContactoControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
 
@@ -52,7 +52,7 @@ public class ContactoControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         

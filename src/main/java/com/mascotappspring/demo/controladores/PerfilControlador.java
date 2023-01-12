@@ -47,7 +47,6 @@ public class PerfilControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
@@ -67,7 +66,7 @@ public class PerfilControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         List<Genero> generos = new ArrayList<Genero>(Arrays.asList(Genero.values()));
@@ -96,7 +95,7 @@ public class PerfilControlador {
         if (login == null || !login.getId().equals(id)) {
             return "redirect:/login";
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {

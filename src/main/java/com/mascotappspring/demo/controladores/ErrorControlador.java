@@ -48,7 +48,7 @@ public class ErrorControlador implements ErrorController {
         }
         errorPage.addObject("codigo", httpErrorCode);
         errorPage.addObject("mensaje", errorMsg);
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
 
         return errorPage;
     }

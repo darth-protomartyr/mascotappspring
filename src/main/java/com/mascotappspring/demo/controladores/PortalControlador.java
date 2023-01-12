@@ -77,12 +77,12 @@ public class PortalControlador {
     public String inicio(ModelMap modelo, HttpSession session) throws ErrorServicio {
         Usuario login = (Usuario) session.getAttribute("usuariosession");
         String id = login.getId();
-        Usuario usuario = usuarioServ.actualizarPenalidad(id);
+        Usuario usuario = new Usuario();
         Optional<Usuario> rta = usuarioRepo.findById(id);
         if (rta.isPresent()) {
             usuario = rta.get();
         }
-        modelo.put("pen", "La cuenta se encuentra penalizada para realizar préstamos");
+        
         String role = login.getRol().toString();
         modelo.put("role", role);
         session.setAttribute("usuariosession", usuario);

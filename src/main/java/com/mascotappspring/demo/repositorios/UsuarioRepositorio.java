@@ -24,15 +24,7 @@ public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
     //Busca usuario de alta por id
     @Query("SELECT s FROM Usuario s WHERE s.id = :usuarioId AND s.alta = true")
     public Optional<Usuario> buscaUsuarioIdAlta (@Param("usuarioId") String usuarioId);
-    
-    //Busca usuario de alta por id que esté penalizado
-    @Query("SELECT s FROM Usuario s WHERE s.id = :usuarioId AND s.alta = true AND s.penalidad = true")
-    public Optional<Usuario> buscaUsuarioIdAltaPenAlta (@Param("usuarioId") String usuarioId);
-    
-    //Lista usuarios de alta que estén penalizados
-    @Query("SELECT s FROM Usuario s WHERE s.alta = true AND s.penalidad = true")
-    public Optional <List<Usuario>> ListarUsuarioIdAltaPenAlta ();
-    
+        
 //    @Query("SELECT s FROM Usuario s WHERE s.pass = :pass AND s.alta = true")
 //    public Usuario buscaUsuarioPass (@Param("pass") String nombre);
     

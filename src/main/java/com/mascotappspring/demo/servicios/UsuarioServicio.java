@@ -103,7 +103,6 @@ public class UsuarioServicio implements UserDetailsService {
         Foto foto = picServ.guardar(archivo);
         usuario.setFoto(foto);
         usuario.setAlta(true);
-        usuario.setPenalidad(Boolean.FALSE);
         usuario.setMail(validarMail(mail));
         usuario.setRol(Rol.USUARIO);
         usuario.setSolicitudBaja(Boolean.FALSE);
@@ -225,37 +224,6 @@ public class UsuarioServicio implements UserDetailsService {
 //        }
 //    }
     
-    @Transactional
-    public void eliminarPenalidad (String id) throws ErrorServicio {
-        Usuario usuario = null;
-        Optional <Usuario> rta = usuarioRepo.buscaUsuarioIdAltaPenAlta(id);
-        if (rta.isPresent()) {
-            usuario = rta.get();
-            usuario.setPenalidad(Boolean.FALSE);
-            usuario.setFechaPenalidad(null);
-        }
-        usuarioRepo.save(usuario);
-    }
-    
-    
-    
-    @Transactional
-    public void modificarPenalidad (String penalizadoId, String newPen) throws Exception {
-        newPen = newPen.concat(" 00:00:00");
-        Usuario usuario = null;
-        Optional <Usuario> rta = usuarioRepo.buscaUsuarioIdAltaPenAlta(penalizadoId);
-        if (rta.isPresent()) {
-            usuario = rta.get();
-            Date newDate = dateConverter(newPen);
-            usuario.setFechaPenalidad(newDate);
-            if (newDate.before(new Date())) {
-                usuario.setPenalidad(Boolean.FALSE);
-                usuario.setFechaPenalidad(null);
-            }
-            usuarioRepo.save(usuario);
-        }
-    }
-    
     
     //--------------------------------------Solo Usuario
     @Transactional(readOnly = true)
@@ -360,24 +328,8 @@ public class UsuarioServicio implements UserDetailsService {
             throw new ErrorServicio ("El nombre de usuario que ingresó no se encuentra en la base de datos");
         }
     }
+
     
-    
-    @Transactional
-    public Usuario actualizarPenalidad(String id) throws ErrorServicio {
-        Usuario usuario = null;
-        Optional<Usuario> rta1 = usuarioRepo.buscaUsuarioIdAltaPenAlta(id);
-        if(rta1.isPresent()) {
-            usuario = rta1.get();
-            if(usuario.getFechaPenalidad().before(new Date())) {
-                usuario.setFechaPenalidad(null);
-                usuario.setPenalidad(Boolean.FALSE);
-            }
-        }
-        return usuario;
-    }
-
-
-
     public String cleanString(String str) {
         str = str.toLowerCase().replace(" ", "");
         return str;
