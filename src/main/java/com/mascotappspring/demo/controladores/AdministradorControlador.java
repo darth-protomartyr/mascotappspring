@@ -4,18 +4,12 @@
  * and open the template in the editor.
  */
 package com.mascotappspring.demo.controladores;
-import com.mascotappspring.demo.entidades.Orden;
-import com.mascotappspring.demo.entidades.Prestamo;
 import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.enumeraciones.Genero;
 import com.mascotappspring.demo.enumeraciones.Rol;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
-import com.mascotappspring.demo.repositorios.OrdenRepositorio;
-import com.mascotappspring.demo.repositorios.PrestamoRepositorio;
 import com.mascotappspring.demo.repositorios.UsuarioRepositorio;
 import com.mascotappspring.demo.servicios.AdministradorServicio;
-import com.mascotappspring.demo.servicios.OrdenServicio;
-import com.mascotappspring.demo.servicios.PrestamoServicio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -45,17 +39,9 @@ public class AdministradorControlador {
 @Autowired
 AdministradorServicio adminServ;
 @Autowired
-OrdenServicio ordenServ;
-@Autowired
 UsuarioRepositorio usuarioRepo;
 @Autowired
-PrestamoRepositorio prestamoRepo;
-@Autowired
-PrestamoServicio prestamoServ;
-@Autowired
 UsuarioServicio usuarioServ;
-@Autowired
-OrdenRepositorio ordenRepo;
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR')")
     @GetMapping("/administrador")

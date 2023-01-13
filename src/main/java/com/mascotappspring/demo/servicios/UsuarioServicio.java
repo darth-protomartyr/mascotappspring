@@ -208,21 +208,6 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
     
-//    @Transactional
-//    public void modificarPenalidad(String id, int penalidad) throws ErrorServicio {
-//        Optional<Usuario> rta = usuarioRepo.buscaUsuarioIdAlta(id);
-//        Usuario usuario = rta.get();
-//        if (rta.isPresent()) {
-//            if (usuario.getAlta().equals(true)) {
-//                throw new ErrorServicio("El usuario se encuentra dado de alta.");
-//            } else {
-//            usuario.setAlta(Boolean.TRUE);
-//            usuarioRepo.save(usuario);
-//            }
-//        } else {
-//            throw new ErrorServicio ("El nombre de usuario que ingresó no se encuentra en la base de datos");
-//        }
-//    }
     
     
     //--------------------------------------Solo Usuario

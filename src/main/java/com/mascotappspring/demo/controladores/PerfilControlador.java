@@ -8,7 +8,6 @@ import com.mascotappspring.demo.entidades.Usuario;
 import com.mascotappspring.demo.enumeraciones.Genero;
 import com.mascotappspring.demo.enumeraciones.Rol;
 import com.mascotappspring.demo.excepciones.ErrorServicio;
-import com.mascotappspring.demo.servicios.PrestamoServicio;
 import com.mascotappspring.demo.servicios.UsuarioServicio;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,8 +33,6 @@ public class PerfilControlador {
 
     @Autowired
     private UsuarioServicio usuarioServ;
-    @Autowired
-    private PrestamoServicio prestamoServ;
 
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_EDITOR', 'ROLE_USUARIO')")
@@ -99,10 +96,6 @@ public class PerfilControlador {
         String role = login.getRol().toString();
         modelo.put("role", role);
         try {
-            //Evita que se dé de baja un usuario con prestamos en curso.
-            if (prestamoServ.verificarPrestamosEnCurso(login.getId())) {
-                throw new ErrorServicio("Usted tiene préstamos pendientes y no puede solicitar la baja de su cuenta");
-            }
             //Evita que el ADMIN SEA DADO DE BAJA
             if(login.getRol().equals(Rol.ADMIN)) {
                 throw new ErrorServicio("El Administrador no puede ser dado de baja");

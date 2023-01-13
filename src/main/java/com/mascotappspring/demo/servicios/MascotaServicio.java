@@ -375,6 +375,4 @@ public class MascotaServicio {
                 throw new ErrorServicio("No ingresó un dato válido en la categoria Color");
         }
     }
-
-
 }
